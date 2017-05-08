@@ -1,3 +1,6 @@
+/*
+ * @author yanjusong
+ */
 #include <stdio.h>
 
 int insertSort(int *, int );
