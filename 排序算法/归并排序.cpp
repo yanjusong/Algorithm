@@ -7,7 +7,7 @@ void merge(int *, int , int , int );
 
 void merge(int *nums, int low, int mid, int high)
 {
-    //¸´ÖÆµ½ÁÙÊ±Êı×é
+    //å¤åˆ¶åˆ°ä¸´æ—¶æ•°ç»„
     int *tmp = (int *)malloc( sizeof(int)*(high - low + 1) );
     for(int i = 0, j = low; i < (high - low + 1); ) {
         tmp[i++] = nums[j++];

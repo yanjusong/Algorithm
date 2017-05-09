@@ -24,16 +24,16 @@ int heapSort(int *nums, int length)
         return 1;
     }
     
-    // ½¨¶Ñ
+    // å»ºå †
     for(int i = length/2 - 1; i >= 0; --i) {
         heapAdjust(nums, i, length);
     }
     
-    // ¶ÑÍ·¶ÑÎ²½»»» + µ÷Õû¶Ñ
+    // å †å¤´å †å°¾äº¤æ¢ + è°ƒæ•´å †
     for(int i = 0; i < length - 1; ++i) {
-        // ½»»»
+        // äº¤æ¢
         swap(&nums[0], &nums[length - i - 1]);
-        // µ÷Õû
+        // è°ƒæ•´
         heapAdjust(nums, 0, length - i - 1);
     }
     
