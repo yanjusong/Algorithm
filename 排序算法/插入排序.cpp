@@ -15,7 +15,7 @@ int insertSort(int *nums, int length)
     for(int i = 1; i < length; ++i) {
         tmp = nums[i];
         j = i;
-        // whileÒ»¶¨Ñ­»·Ò»´ÎÒÔÉÏ
+        // è¿™é‡Œä¸€å®šå¾ªç¯ä¸€æ¬¡ä»¥ä¸Š
         while(j >= 0 && tmp <= nums[j]) {
             nums[j] = nums[--j];
         }
