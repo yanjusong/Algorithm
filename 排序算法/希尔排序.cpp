@@ -9,12 +9,12 @@ int shellSort(int *nums, int length)
     }
 
     int d = length/2;
-
+    int tmp, k;
     while(d > 0) {
         for(int i = 0; i < d; ++i) {
             for(int j = i + d; j < length; j += d) {
-                int tmp = nums[j];
-                int k = j;
+                tmp = nums[j];
+                k = j;
                 while(k >= 0 && nums[k] >= tmp) {
                     nums[k] = nums[k - d];
                     k -= d;
