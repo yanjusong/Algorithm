@@ -23,28 +23,28 @@ Node::~Node()
 
 int Node::hash()
 {
-	// 这里的std不值为何无法去掉
-	return std::hash<int>()(m_key);
+    // 这里的std不值为何无法去掉
+    return std::hash<int>()(m_key);
 }
 
 bool Node::operator==(const Node &node)
 {
-	if(this->m_key == node.m_key && this->m_value == node.m_value) {
-		return true;
-	}
-	return false;
+    if(this->m_key == node.m_key && this->m_value == node.m_value) {
+        return true;
+    }
+    return false;
 }
 
 Node& Node::operator=(const Node &node)
 {
-	if(this != &node && this->m_key == node.m_key) {
-		this->m_value = node.m_value;
-	}
-	return *this;
+    if(this != &node && this->m_key == node.m_key) {
+        this->m_value = node.m_value;
+    }
+    return *this;
 }
 
 Node& Node::operator=(int value)
 {
-	this->m_value = value;
-	return *this;
+    this->m_value = value;
+    return *this;
 }

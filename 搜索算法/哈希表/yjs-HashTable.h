@@ -17,7 +17,7 @@ private:
     Node **m_node;
 
 private:
-	void freeNodes(int capacity);
+    void freeNodes(int capacity);
 public:
     HashTable(int initCapacity = 16, float loadFactor = 0.75);
     ~HashTable();
