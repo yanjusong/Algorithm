@@ -6,12 +6,12 @@ using namespace std;
 
 struct Node
 {
-	int m_data;
-	Node *m_left;
-	Node *m_right;
+    int m_data;
+    Node *m_left;
+    Node *m_right;
 
-	Node(int data = 0, Node *left = NULL, Node *right = NULL);
-	~Node();
+    Node(int data = 0, Node *left = NULL, Node *right = NULL);
+    ~Node();
 };
 
 #endif // _YJS_NODE_H_
