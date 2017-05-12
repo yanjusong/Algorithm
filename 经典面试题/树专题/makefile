@@ -1,5 +1,7 @@
-objects = yjs-OperateTree.o yjs-Node.o mirrorTree.o levelTravel.o
-operateCPP = yjs-OperateTree.cpp mirrorTree.cpp levelTravel.cpp
+objects = yjs-OperateTree.o yjs-Node.o mirrorTree.o levelTraversal.o treeHeight.o \
+          preOrderTraversal.o inOrderTraversal.o postOrderTraversal.o
+operateCPP = yjs-OperateTree.cpp mirrorTree.cpp levelTraversal.cpp treeHeight.cpp \
+             preOrderTraversal.cpp inOrderTraversal.cpp postOrderTraversal.cpp
 
 main : main.cpp $(objects)
 	g++ -std=c++11 main.cpp $(objects) -o main

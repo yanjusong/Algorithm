@@ -3,7 +3,7 @@
 #include <queue>
 using namespace std;
 
-void levelTravel(Node *root)
+void levelTraversal(Node *root)
 {
     if(!root) {
         return ;
@@ -13,7 +13,7 @@ void levelTravel(Node *root)
     q.push(root);
     while(!q.empty()) {
         Node *tmpNode = q.front();
-        cout << tmpNode->m_data << endl;
+        cout << tmpNode->m_data << " ";
         q.pop();        
 
         if(tmpNode->m_left) {
@@ -24,4 +24,5 @@ void levelTravel(Node *root)
             q.push(tmpNode->m_right);
         }
     }
+    cout << endl;
 }

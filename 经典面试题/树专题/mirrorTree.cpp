@@ -20,7 +20,7 @@ void mirrorTree(Node *root)
     mirrorTree(root->m_right);
 }
 
-void mirrorTreeNotRct(Node *root)
+void mirrorTreeNotRcs(Node *root)
 {
     if(root == NULL) {
         return ;

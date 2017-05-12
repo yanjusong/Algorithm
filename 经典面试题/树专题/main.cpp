@@ -22,14 +22,33 @@ int main(int argc, char const *argv[])
      *      / \   / \
      *     4   5 6   7
      */
+    cout << "Level Traversal of The Binary Tree" << endl;
+    levelTraversal(&n1);
 
-    levelTravel(&n1);
-    cout << endl;
+    cout << "The Mirror Tree of The Binary Tree" << endl;
     mirrorTree(&n1);
-    levelTravel(&n1);
+    levelTraversal(&n1);
     cout << endl;
-    mirrorTreeNotRct(&n1);
-    levelTravel(&n1);
+    mirrorTreeNotRcs(&n1);
+    levelTraversal(&n1);
+    
+    cout << "The Height of Binary Tree " << endl;
+    cout << treeHeight(&n1) << endl;
+
+    cout << "Pre Order Traversal of The Binary Tree" << endl;
+    preOrderTraversal(&n1);
+    preOrderTraversalNotRcs(&n1);
+
+    cout << "In Order Traversal of The Binary Tree" << endl;
+    inOrderTraversal(&n1);
+    cout << endl;
+    inOrderTraversalNotRcs(&n1);
+
+    cout << "Post Order Traversal of The Binary Tree" << endl;
+    postOrderTraversal(&n1);
+    cout << endl;
+    postOrderTraversalNotRcs1(&n1);
+    postOrderTraversalNotRcs2(&n1);
 
     return 0;
 }
