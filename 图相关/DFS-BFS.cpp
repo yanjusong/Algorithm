@@ -86,6 +86,7 @@ int main(int argc, char const *argv[])
     Node n5(5);
     Node n6(6);
 
+    // 构造的图如dfs-bfs.png所示
     n1.connectionNodes.push_back(&n2);
     n1.connectionNodes.push_back(&n6);
     n1.connectionNodes.push_back(&n3);
