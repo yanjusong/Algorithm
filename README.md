@@ -12,8 +12,6 @@
 6. [归并排序](./sort/sort/merge.c)
 7. [堆排序](./sort/sort/heap.c)
 
-<img src="./img/sort/exec_result.png" align="left" />  
-
 ------
 
 ## [搜索算法](./搜索算法)
