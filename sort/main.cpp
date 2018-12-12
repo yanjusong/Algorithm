@@ -75,7 +75,7 @@ int performanceTest(int *randomNums, int len, SortFunc func)
 void test(SortFunc func, const char *desc)
 {
     int cost = performanceTest(nums, MAX_NUM, func);
-    printf("算法:%s, 数据:%d, 耗时:%dms\n", desc, MAX_NUM, cost);
+    printf("\t算法:%s, 数据:%d, 耗时:%dms\n", desc, MAX_NUM, cost);
 }
 
 int main(int argc, char *argv[])
@@ -84,6 +84,7 @@ int main(int argc, char *argv[])
 
     genRandomNums(nums, MAX_NUM);
 
+    printf("\n");
     test(bubblesort, "冒泡排序");
     test(selectsort, "选择排序");
     test(insertsort, "插入排序");
