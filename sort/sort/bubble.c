@@ -15,7 +15,7 @@ int bubblesort(int *nums, size_t n)
     for (i = n - 1; i > 0; --i) {
         for (j = 0; j < i; ++j) {
             if (nums[j] > nums[j + 1]) {
-                swap(nums + j, nums + j +1);
+                swap(&nums[j], &nums[j + 1])
             }
         }
     }
