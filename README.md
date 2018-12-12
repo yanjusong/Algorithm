@@ -4,14 +4,15 @@
 
 ## [排序算法](./排序算法)
 
-1. [冒泡排序](./排序算法/冒泡排序.cpp)
-2. [插入排序](./排序算法/插入排序.cpp)
-3. [选择排序](./排序算法/选择排序.cpp)
-4. [快速排序](./排序算法/快速排序.cpp)
-5. [归并排序](./排序算法/归并排序.cpp)
-6. [堆排序](./排序算法/堆排序.cpp)
-7. [希尔排序](./排序算法/希尔排序.cpp)
-8. [多路归并排序](./排序算法/多路归并排序.cpp)
+1. [冒泡排序](./sort/sort/bubble.c)
+2. [插入排序](./sort/sort/insert.c)
+3. [希尔排序](./sort/sort/shell.c)
+4. [选择排序](./sort/sort/select.c)
+5. [快速排序](./sort/sort/quick.c)
+6. [归并排序](./sort/sort/merge.c)
+7. [堆排序](./sort/sort/heap.c)
+
+<img src="./img/sort/exec_result.png" align="left" />  
 
 ------
 
