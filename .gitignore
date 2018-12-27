@@ -1,4 +1,8 @@
 build*/
 */bin/
 */*.user
-
+*/*.sdf
+*/*.opensdf
+*/*.suo
+*/Debug/
+*/Release/

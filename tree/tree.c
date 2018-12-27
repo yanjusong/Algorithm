@@ -1,17 +1,7 @@
-#ifndef _CRT_SECURE_NO_WARNINGS
-#define _CRT_SECURE_NO_WARNINGS
-#endif 
+#include "tree.h"
 
 #include <stdio.h>
 #include <stdlib.h>
-
-typedef struct Tree Tree;
-
-struct Tree
-{
-    Tree * left, *right;
-    int element;
-};
 
 Tree *make_empty(Tree *t)
 {
@@ -23,102 +13,6 @@ Tree *make_empty(Tree *t)
 
     return NULL;
 }
-
-Tree *find_min(Tree *t)
-{
-    if (t == NULL) {
-        return NULL;
-    } else if (t->left == NULL) {
-        return t;
-    } else {
-        return find_min(t->left);
-    }
-}
-
-Tree *find_max(Tree *t)
-{
-    if (t == NULL) {
-        return NULL;
-    } else if (t->right == NULL) {
-        return t;
-    } else {
-        return find_max(t->right);
-    }
-}
-
-Tree *find(int elem, Tree *t)
-{
-    if (t == NULL) {
-        return NULL;
-    }
-
-    if (elem < t->element) {
-        return find(elem, t->left);
-    } else if (elem > t->element) {
-        return find(elem, t->right);
-    } else {
-        return t;
-    }
-}
-
-//Insert i into the tree t, duplicate will be discarded
-//Return a pointer to the resulting tree.                 
-Tree *insert(int value, Tree *t)
-{
-    Tree *new_node;
-
-    if (t == NULL) {
-        new_node = (Tree *)malloc(sizeof(Tree));
-        if (new_node == NULL) {
-            return t;
-        }
-
-        new_node->element = value;
-
-        new_node->left = new_node->right = NULL;
-        return new_node;
-    }
-
-    if (value < t->element) {
-        t->left = insert(value, t->left);
-    } else if (value > t->element) {
-        t->right = insert(value, t->right);
-    } else {
-        //duplicate, ignore it
-        return t;
-    }
-    return t;
-}
-
-Tree *delete(int value, Tree *t)
-{
-    //Deletes node from the tree
-    // Return a pointer to the resulting tree
-    Tree *x;
-    Tree *tmp_cell;
-
-    if (t == NULL) return NULL;
-
-    if (value < t->element) {
-        t->left = delete(value, t->left);
-    } else if (value > t->element) {
-        t->right = delete(value, t->right);
-    } else if (t->left && t->right) {
-        tmp_cell = find_min(t->right);
-        t->element = tmp_cell->element;
-        t->right = delete(t->element, t->right);
-    } else {
-        tmp_cell = t;
-        if (t->left == NULL)
-            t = t->right;
-        else if (t->right == NULL)
-            t = t->left;
-        free(tmp_cell);
-    }
-
-    return t;
-}
-
 
 //printing tree in ascii
 
@@ -366,26 +260,4 @@ void print_ascii_tree(Tree *t)
         printf("(This tree is taller than %d, and may be drawn incorrectly.)\n", MAX_HEIGHT);
     }
     free_ascii_tree(proot);
-}
-
-//////////////////////////////////////////////////////////////////////////
-
-void test()
-{
-    int i, tmp;
-    srand((unsigned)time(NULL));
-
-    Tree *root = NULL;
-    for (i = 0; i < 50; ++i) {
-        tmp = rand() % 1000;
-        root = insert(tmp, root);
-    }
-    print_ascii_tree(root);
-}
-
-int main()
-{
-    test();
-    getchar();
-    return 0;
 }
