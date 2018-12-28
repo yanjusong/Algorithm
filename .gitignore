@@ -6,3 +6,5 @@ build*/
 */*.suo
 */Debug/
 */Release/
+*/*.out
+

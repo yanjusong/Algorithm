@@ -1,17 +1,16 @@
-﻿#include "tree.h"
+#include "tree.h"
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
-BTree *make_empty(BTree *t)
+void make_empty(BTree *t)
 {
-    if (t != NULL) {
+    if (t) {
         make_empty(t->left);
         make_empty(t->right);
         free(t);
     }
-
-    return NULL;
 }
 
 //printing tree in ascii

@@ -1,4 +1,5 @@
-﻿#include "avl.h"
+#include "avl.h"
+#include "bst.h"
 
 #include <stdlib.h>
 
@@ -83,12 +84,12 @@ BTree *avl_delete(int value, BTree *t)
     } else if (value > t->element) {
         t->right = avl_delete(value, t->right);
     } else if (t->left && t->right) {
-        // 如果左子树高于右子树
+        // 如果左子树高于右子树，则取左子树的最大值作为新的根结点
         if (height(t->left) > height(t->right)) {
             tmp_cell = find_max(t->left);
             t->element = tmp_cell->element;
             t->left = avl_delete(tmp_cell->element, t->left);
-        } else {
+        } else { // 取右子树的最小值作为新的根结点
             tmp_cell = find_min(t->right);
             t->element = tmp_cell->element;
             t->right = avl_delete(tmp_cell->element, t->right);
