@@ -1,4 +1,4 @@
-#include "avl.h"
+ï»¿#include "avl.h"
 
 #include <stdlib.h>
 
@@ -83,7 +83,7 @@ BTree *avl_delete(int value, BTree *t)
     } else if (value > t->element) {
         t->right = avl_delete(value, t->right);
     } else if (t->left && t->right) {
-        // Èç¹û×ó×ÓÊ÷¸ßÓÚÓÒ×ÓÊ÷
+        // å¦‚æžœå·¦å­æ ‘é«˜äºŽå³å­æ ‘
         if (height(t->left) > height(t->right)) {
             tmp_cell = find_max(t->left);
             t->element = tmp_cell->element;

@@ -1,54 +1,54 @@
-#ifndef BINARY_SERACH_TREE_H_20181227
+ï»¿#ifndef BINARY_SERACH_TREE_H_20181227
 #define BINARY_SERACH_TREE_H_20181227
 
 #include "tree.h"
 
 /*
- * @brief: ÕÒµ½¶ş²æËÑË÷Ê÷ÖĞÖµ×îĞ¡µÄ½áµã
+ * @brief: æ‰¾åˆ°äºŒå‰æœç´¢æ ‘ä¸­å€¼æœ€å°çš„ç»“ç‚¹
  * @params:
- *    BTree *t: ¸ù½áµã
+ *    BTree *t: æ ¹ç»“ç‚¹
  * @return:
- *    NULL: ¸ù½áµãÎªNULL
- *    else: Öµ×îĞ¡µÄ½áµãÖ¸Õë
+ *    NULL: æ ¹ç»“ç‚¹ä¸ºNULL
+ *    else: å€¼æœ€å°çš„ç»“ç‚¹æŒ‡é’ˆ
  */
 BTree *find_min(BTree *t);
 
 /*
- * @brief: ÕÒµ½¶ş²æËÑË÷Ê÷ÖĞÖµ×î´óµÄ½áµã
+ * @brief: æ‰¾åˆ°äºŒå‰æœç´¢æ ‘ä¸­å€¼æœ€å¤§çš„ç»“ç‚¹
  * @params:
- *    BTree *t: ¸ù½áµã
+ *    BTree *t: æ ¹ç»“ç‚¹
  * @return:
- *    NULL: ¸ù½áµãÎªNULL
- *    else: Öµ×î´óµÄ½áµãÖ¸Õë
+ *    NULL: æ ¹ç»“ç‚¹ä¸ºNULL
+ *    else: å€¼æœ€å¤§çš„ç»“ç‚¹æŒ‡é’ˆ
  */
 BTree *find_max(BTree *t);
 
 /*
- * @brief: ÕÒµ½¶ş²æËÑË÷Ê÷ÖĞÖµÎªÌØ¶¨ÖµµÄ½áµã
+ * @brief: æ‰¾åˆ°äºŒå‰æœç´¢æ ‘ä¸­å€¼ä¸ºç‰¹å®šå€¼çš„ç»“ç‚¹
  * @params:
- *    int value: Ö¸¶¨µÄ¼üÖµ
- *    BTree *t:  ¸ù½áµã
+ *    int value: æŒ‡å®šçš„é”®å€¼
+ *    BTree *t:  æ ¹ç»“ç‚¹
  * @return:
- *    NULL: ¸ù½áµãÎªNULL»òÕß²»´æÔÚ¸ÄÖµµÄ½áµã
- *    else: ¶ş²æËÑË÷Ê÷ÖĞÖµÎªelemµÄ½áµãÖ¸Õë
+ *    NULL: æ ¹ç»“ç‚¹ä¸ºNULLæˆ–è€…ä¸å­˜åœ¨æ”¹å€¼çš„ç»“ç‚¹
+ *    else: äºŒå‰æœç´¢æ ‘ä¸­å€¼ä¸ºelemçš„ç»“ç‚¹æŒ‡é’ˆ
  */
 BTree *find(int value, BTree *t);
 
 /*
- * @brief: ÔÚ¶ş²æËÑË÷Ê÷ÖĞ²åÈëÌØ¶¨ÖµµÄ½áµã
+ * @brief: åœ¨äºŒå‰æœç´¢æ ‘ä¸­æ’å…¥ç‰¹å®šå€¼çš„ç»“ç‚¹
  * @params:
- *    int value: Ö¸¶¨µÄÖµ
- *    BTree *t:  ¸ù½áµã
- * @return: ²åÈëĞÂ½áµãºóµÄ¸ù½áµã
+ *    int value: æŒ‡å®šçš„å€¼
+ *    BTree *t:  æ ¹ç»“ç‚¹
+ * @return: æ’å…¥æ–°ç»“ç‚¹åçš„æ ¹ç»“ç‚¹
  */
 BTree *bst_insert(int value, BTree *t);
 
 /*
- * @brief: É¾³ı¶ş²æËÑË÷Ê÷ÖĞÖµÎªÌØ¶¨ÖµµÄ½áµã
+ * @brief: åˆ é™¤äºŒå‰æœç´¢æ ‘ä¸­å€¼ä¸ºç‰¹å®šå€¼çš„ç»“ç‚¹
  * @params:
- *    int value: Ö¸¶¨µÄ¼üÖµ
- *    BTree *t:  ¸ù½áµã
- * @return: ·µ»ØÉ¾³ı¸Ä½áµãºóµÄ¸ù½áµã
+ *    int value: æŒ‡å®šçš„é”®å€¼
+ *    BTree *t:  æ ¹ç»“ç‚¹
+ * @return: è¿”å›åˆ é™¤æ”¹ç»“ç‚¹åçš„æ ¹ç»“ç‚¹
  */
 BTree *bst_delete(int value, BTree *t);
 
