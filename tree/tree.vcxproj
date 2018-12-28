@@ -78,11 +78,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="avl.c" />
     <ClCompile Include="bst.c" />
-    <ClCompile Include="test_print.c" />
+    <ClCompile Include="test_avl.c" />
     <ClCompile Include="tree.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="avl.h" />
     <ClInclude Include="bst.h" />
     <ClInclude Include="tree.h" />
   </ItemGroup>

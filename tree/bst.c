@@ -2,7 +2,7 @@
 
 #include <stdlib.h>
 
-Tree *find_min(Tree *t)
+BTree *find_min(BTree *t)
 {
     if (t == NULL) {
         return NULL;
@@ -13,7 +13,7 @@ Tree *find_min(Tree *t)
     }
 }
 
-Tree *find_max(Tree *t)
+BTree *find_max(BTree *t)
 {
     if (t == NULL) {
         return NULL;
@@ -24,7 +24,7 @@ Tree *find_max(Tree *t)
     }
 }
 
-Tree *find(int value, Tree *t)
+BTree *find(int value, BTree *t)
 {
     if (t == NULL) {
         return NULL;
@@ -39,26 +39,15 @@ Tree *find(int value, Tree *t)
     }
 }
 
-Tree *insert(int value, Tree *t)
+BTree *bst_insert(int value, BTree *t)
 {
-    Tree *new_node;
-
-    if (t == NULL) {
-        new_node = (Tree *)malloc(sizeof(Tree));
-        if (new_node == NULL) {
-            return t;
-        }
-
-        new_node->element = value;
-
-        new_node->left = new_node->right = NULL;
-        return new_node;
-    }
+    if (!t)
+        return getNode(value);
 
     if (value < t->element) {
-        t->left = insert(value, t->left);
+        t->left = bst_insert(value, t->left);
     } else if (value > t->element) {
-        t->right = insert(value, t->right);
+        t->right = bst_insert(value, t->right);
     } else {
         //duplicate, ignore it
         return t;
@@ -66,23 +55,22 @@ Tree *insert(int value, Tree *t)
     return t;
 }
 
-Tree *del(int value, Tree *t)
+BTree *bst_delete(int value, BTree *t)
 {
     //Deletes node from the tree
     // Return a pointer to the resulting tree
-    Tree *x;
-    Tree *tmp_cell;
+    BTree *tmp_cell;
 
     if (t == NULL) return NULL;
 
     if (value < t->element) {
-        t->left = del(value, t->left);
+        t->left = bst_delete(value, t->left);
     } else if (value > t->element) {
-        t->right = del(value, t->right);
+        t->right = bst_delete(value, t->right);
     } else if (t->left && t->right) {
         tmp_cell = find_min(t->right);
         t->element = tmp_cell->element;
-        t->right = del(t->element, t->right);
+        t->right = bst_delete(t->element, t->right);
     } else {
         tmp_cell = t;
         if (t->left == NULL)

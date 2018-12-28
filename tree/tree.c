@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-Tree *make_empty(Tree *t)
+BTree *make_empty(BTree *t)
 {
     if (t != NULL) {
         make_empty(t->left);
@@ -59,7 +59,7 @@ int MAX(int X, int Y)
     return ((X) > (Y)) ? (X) : (Y);
 }
 
-asciinode *build_ascii_tree_recursive(Tree *t)
+asciinode *build_ascii_tree_recursive(BTree *t)
 {
     asciinode *node;
 
@@ -85,7 +85,7 @@ asciinode *build_ascii_tree_recursive(Tree *t)
 
 
 //Copy the tree into the ascii node structre
-asciinode *build_ascii_tree(Tree *t)
+asciinode *build_ascii_tree(BTree *t)
 {
     asciinode *node;
     if (t == NULL) return NULL;
@@ -236,7 +236,7 @@ void print_level(asciinode *node, int x, int level)
 }
 
 //prints ascii tree for given Tree structure
-void print_ascii_tree(Tree *t)
+void print_ascii_tree(BTree *t)
 {
     asciinode *proot;
     int xmin, i;
@@ -260,4 +260,21 @@ void print_ascii_tree(Tree *t)
         printf("(This tree is taller than %d, and may be drawn incorrectly.)\n", MAX_HEIGHT);
     }
     free_ascii_tree(proot);
+}
+
+int height(BTree *t)
+{
+    if (!t)
+        return 0;
+
+    return MAX(height(t->left), height(t->right)) + 1;
+}
+
+BTree *getNode(int value)
+{
+    BTree *new_node = (BTree *)malloc(sizeof(BTree));
+    new_node->element = value;
+
+    new_node->left = new_node->right = NULL;
+    return new_node;
 }

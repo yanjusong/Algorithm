@@ -3,23 +3,26 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
-void test()
+void test_print()
 {
     int i, tmp;
     srand((unsigned)time(NULL));
 
-    Tree *root = NULL;
+    BTree *root = NULL;
     for (i = 0; i < 50; ++i) {
         tmp = rand() % 1000;
-        root = insert(tmp, root);
+        root = bst_insert(tmp, root);
     }
     print_ascii_tree(root);
+	
+	make_empty(root);
 }
 
 int main()
 {
-    test();
+    test_print();
     getchar();
     return 0;
 }

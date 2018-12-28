@@ -5,9 +5,11 @@ CONFIG -= qt
 
 SOURCES += \
     bst.c \
-    test_print.c \
-    tree.c
+    tree.c \
+    avl.c \
+    test_avl.c
 
 HEADERS += \
     bst.h \
-    tree.h
+    tree.h \
+    avl.h
