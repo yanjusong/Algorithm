@@ -1,4 +1,4 @@
-#include "tree.h"
+﻿#include "tree.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -276,4 +276,37 @@ BTree *getNode(int value)
 
     new_node->left = new_node->right = NULL;
     return new_node;
+}
+
+bool check_sorted(BTree *t)
+{
+    bool stat = true;
+
+    if (t) {
+        stat &= check_sorted(t->left);
+        stat &= check_sorted(t->right);
+    }
+
+    return stat;
+}
+
+bool check_balanced(BTree *t)
+{
+    bool stat = true;
+    int lh, rh;
+    int diff;
+
+    if (t) {
+        lh = height(t->left);
+        rh = height(t->right);
+        diff = abs(lh - rh);
+        if (diff > 1) {
+            stat = false;
+        } else {
+            stat &= check_balanced(t->left);
+            stat &= check_balanced(t->right);
+        }
+    }
+
+    return stat;
 }

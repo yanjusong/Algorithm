@@ -1,17 +1,19 @@
-#include "avl.h"
+﻿#include "avl.h"
 #include "bst.h"
 
 #include <stdlib.h>
 
 BTree *avl_insert(int value, BTree *t)
 {
+    int lh, rh;
+
     if (!t) 
         return getNode(value);
 
     if (value < t->element) {
         t->left = avl_insert(value, t->left);
-        int lh = height(t->left);
-        int rh = height(t->right);
+        lh = height(t->left);
+        rh = height(t->right);
 
         if (lh - rh == 2) {
             if (value < t->left->element) {
@@ -25,8 +27,8 @@ BTree *avl_insert(int value, BTree *t)
 
     } else if (value > t->element) {
         t->right = avl_insert(value, t->right);
-        int lh = height(t->left);
-        int rh = height(t->right);
+        lh = height(t->left);
+        rh = height(t->right);
 
         if (rh - lh == 2) {
             if (value > t->right->element) {
@@ -75,14 +77,44 @@ BTree *rl_rotate(BTree *t)
 
 BTree *avl_delete(int value, BTree *t)
 {
+    int lh, rh;
     BTree *tmp_cell;
 
     if (t == NULL) return NULL;
 
     if (value < t->element) {
         t->left = avl_delete(value, t->left);
+        lh = height(t->left);
+        rh = height(t->right);
+
+        // 删除左子树的结点，左子树高度可能降低
+        if (rh - lh == 2) {
+            tmp_cell = t->right;
+            lh = height(tmp_cell->left);
+            rh = height(tmp_cell->right);
+
+            if (lh > rh)
+                t = rl_rotate(t);
+            else
+                t = rr_rotate(t);
+        }
     } else if (value > t->element) {
         t->right = avl_delete(value, t->right);
+
+        lh = height(t->left);
+        rh = height(t->right);
+
+        // 删除右子树的结点，右子树高度可能降低
+        if (lh - rh == 2) {
+            tmp_cell = t->left;
+            lh = height(tmp_cell->left);
+            rh = height(tmp_cell->right);
+
+            if (rh > lh)
+                t = lr_rotate(t);
+            else
+                t = ll_rotate(t);
+        }
     } else if (t->left && t->right) {
         // 如果左子树高于右子树，则取左子树的最大值作为新的根结点
         if (height(t->left) > height(t->right)) {
