@@ -3,10 +3,10 @@
 
 #include "tree.h"
 
-BTree *ll_rotate(BTree *t);
-BTree *rr_rotate(BTree *t);
-BTree *lr_rotate(BTree *t);
-BTree *rl_rotate(BTree *t);
+BTree *avl_ll_rotate(BTree *t);
+BTree *avl_rr_rotate(BTree *t);
+BTree *avl_lr_rotate(BTree *t);
+BTree *avl_rl_rotate(BTree *t);
 
 /*
  * @brief: 在二叉搜索树中插入特定值的结点，并且调整为平衡状态

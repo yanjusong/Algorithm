@@ -12,6 +12,7 @@ typedef int bool;
 
 enum Color
 {
+    None = 0,
     Red = 1,
     Black = 2,
 };
@@ -42,6 +43,24 @@ void make_empty(BTree *t);
 BTree *getNode(int value);
 
 /*
+ * @brief: 获取指定结点的祖父结点指针
+ * @params:
+ *    BTree *t: 指定结点指针
+ * @return:
+ *    祖父结点指针，如果没有则为NULL
+ */
+BTree *grandparent(BTree *t);
+
+/*
+ * @brief: 获取指定结点的叔父结点指针
+ * @params:
+ *    BTree *t: 指定结点指针
+ * @return:
+ *    叔父结点指针，如果没有则为NULL
+ */
+BTree *uncle(BTree *t);
+
+/*
  * @brief: 获取树的高度
  * @params:
  *    BTree *t: 根结点
@@ -52,6 +71,7 @@ int height(BTree *t);
 
 /*
  * @brief: 控制台打印二叉树
+ *         打印红黑树时，黑色结点打印为白色，红色结点打印为红色
  * @params:
  *    BTree *t: 根结点
  */
@@ -79,5 +99,44 @@ bool check_sorted(BTree *t);
  *    1(true):  符合
  */
 bool check_balanced(BTree *t);
+
+/*
+ * @brief: 检查树是否符合红黑树特征
+ * @params:
+ *    BTree *t: 根结点
+ * @return:
+ *    0(false): 不符合
+ *    1(true):  符合
+ */
+bool check_rb_tree(BTree *t);
+
+/*
+ * @brief: 获取树从根结点的到叶子的所有路径中黑色结点最多的路径中黑色结点个数
+ * @params:
+ *    BTree *t: 根结点
+ * @return:
+ *    黑色结点个数
+ */
+int get_bnode_num(BTree *t);
+
+/*
+ * @brief: 检查树是否符合从根节点到叶子每条路径的黑色结点数目是否相等
+ * @params:
+ *    BTree *t: 根结点
+ * @return:
+ *    0(false): 不符合
+ *    1(true):  符合
+ */
+bool check_rb_black_num(BTree *t);
+
+/*
+ * @brief: 检查树从根节点到叶子每条路径的是否没有相邻的红色结点
+ * @params:
+ *    BTree *t: 根结点
+ * @return:
+ *    0(false): 不符合
+ *    1(true):  符合
+ */
+bool check_rb_red(BTree *t);
 
 #endif // !TREE_H_20181227

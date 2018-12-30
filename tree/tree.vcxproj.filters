@@ -24,10 +24,10 @@
     <ClCompile Include="avl.c">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="test_avl.c">
+    <ClCompile Include="rb.c">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="rb.c">
+    <ClCompile Include="test_rb.c">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

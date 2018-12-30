@@ -26,7 +26,7 @@ void test_avl()
         if (isbalanced == false)
             ++unbalanced;
 
-        printf("-------------------------------------------------------\t%d: inserted(%d), sorted(%d), balanced(%d)\n", i, tmp, issorted, isbalanced);
+        printf("-------------------------------------------------------\t%d: inserted(%d), sorted(%d), balanced(%d)\n", i + 1, tmp, issorted, isbalanced);
         print_ascii_tree(root);
     }
 
@@ -40,7 +40,7 @@ void test_avl()
         if (isbalanced == false)
             ++unbalanced;
 
-        printf("-------------------------------------------------------\t%d: deleted(%d), sorted(%d), balanced(%d)\n", i, tmp, issorted, isbalanced);
+        printf("-------------------------------------------------------\t%d: deleted(%d), sorted(%d), balanced(%d)\n", i + 1, tmp, issorted, isbalanced);
         print_ascii_tree(root);
     }
 

@@ -18,10 +18,10 @@ BTree *avl_insert(int value, BTree *t)
         if (lh - rh == 2) {
             if (value < t->left->element) {
                 // left-left rotate
-                t = ll_rotate(t);
+                t = avl_ll_rotate(t);
             } else {
                 // left-right rotate
-                t = lr_rotate(t);
+                t = avl_lr_rotate(t);
             }
         }
 
@@ -33,21 +33,20 @@ BTree *avl_insert(int value, BTree *t)
         if (rh - lh == 2) {
             if (value > t->right->element) {
                 // right-right rotate
-                t = rr_rotate(t);
+                t = avl_rr_rotate(t);
             } else {
                 // right-left rotate
-                t = rl_rotate(t);
+                t = avl_rl_rotate(t);
             }
         }
 
     } else {
         //duplicate, ignore it
-        return t;
     }
     return t;
 }
 
-BTree *ll_rotate(BTree *t)
+BTree *avl_ll_rotate(BTree *t)
 {
     BTree *ori_left = t->left;
     t->left = ori_left->right;
@@ -55,7 +54,7 @@ BTree *ll_rotate(BTree *t)
     return ori_left;
 }
 
-BTree *rr_rotate(BTree *t)
+BTree *avl_rr_rotate(BTree *t)
 {
     BTree *ori_right = t->right;
     t->right = ori_right->left;
@@ -63,16 +62,16 @@ BTree *rr_rotate(BTree *t)
     return ori_right;
 }
 
-BTree *lr_rotate(BTree *t)
+BTree *avl_lr_rotate(BTree *t)
 {
-    t->left = rr_rotate(t->left);
-    return ll_rotate(t);
+    t->left = avl_rr_rotate(t->left);
+    return avl_ll_rotate(t);
 }
 
-BTree *rl_rotate(BTree *t)
+BTree *avl_rl_rotate(BTree *t)
 {
-    t->right = ll_rotate(t->right);
-    return rr_rotate(t);
+    t->right = avl_ll_rotate(t->right);
+    return avl_rr_rotate(t);
 }
 
 BTree *avl_delete(int value, BTree *t)
@@ -94,9 +93,9 @@ BTree *avl_delete(int value, BTree *t)
             rh = height(tmp_cell->right);
 
             if (lh > rh)
-                t = rl_rotate(t);
+                t = avl_rl_rotate(t);
             else
-                t = rr_rotate(t);
+                t = avl_rr_rotate(t);
         }
     } else if (value > t->element) {
         t->right = avl_delete(value, t->right);
@@ -111,9 +110,9 @@ BTree *avl_delete(int value, BTree *t)
             rh = height(tmp_cell->right);
 
             if (rh > lh)
-                t = lr_rotate(t);
+                t = avl_lr_rotate(t);
             else
-                t = ll_rotate(t);
+                t = avl_ll_rotate(t);
         }
     } else if (t->left && t->right) {
         // 如果左子树高于右子树，则取左子树的最大值作为新的根结点

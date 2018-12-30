@@ -4,6 +4,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+#ifdef _WIN32
+#include <Windows.h>
+#endif
+
 void make_empty(BTree *t)
 {
     if (t) {
@@ -33,6 +37,8 @@ struct asciinode_struct
 
     //max supported unit32 in dec, 10 digits max
     char label[11];
+
+    Color color;
 };
 
 
@@ -76,6 +82,7 @@ asciinode *build_ascii_tree_recursive(BTree *t)
         node->right->parent_dir = 1;
     }
 
+    node->color = t->color;
     sprintf(node->label, "%d", t->element);
     node->lablen = strlen(node->label);
 
@@ -205,7 +212,24 @@ void print_level(asciinode *node, int x, int level)
             printf(" ");
         }
         print_next += i;
+
+#ifdef _WIN32
+        HANDLE hd = NULL;
+        if (node->color == Red) {
+            hd = GetStdHandle(STD_OUTPUT_HANDLE);
+            SetConsoleTextAttribute(hd, FOREGROUND_RED | FOREGROUND_INTENSITY);
+        } else if (node->color == Black) {
+            //
+        }
+#endif
         printf("%s", node->label);
+
+#ifdef _WIN32
+        SetConsoleTextAttribute(hd, FOREGROUND_RED |
+                                FOREGROUND_GREEN |
+                                FOREGROUND_BLUE);
+#endif
+
         print_next += node->lablen;
     } else if (node->edge_length >= level) {
         if (node->left != NULL) {
@@ -272,9 +296,13 @@ int height(BTree *t)
 BTree *getNode(int value)
 {
     BTree *new_node = (BTree *)malloc(sizeof(BTree));
-    new_node->element = value;
 
-    new_node->left = new_node->right = NULL;
+    if (new_node) {
+        new_node->element = value;
+        new_node->color = None;
+        new_node->left = new_node->right = new_node->parent = NULL;
+    }
+
     return new_node;
 }
 
@@ -309,4 +337,87 @@ bool check_balanced(BTree *t)
     }
 
     return stat;
+}
+
+BTree *grandparent(BTree *t)
+{
+    if (!t)
+        return NULL;
+    if (!t->parent)
+        return NULL;
+    return t->parent->parent;
+}
+
+BTree *uncle(BTree *t)
+{
+    if (!t)
+        return NULL;
+    if (!t->parent)
+        return NULL;
+    if (!t->parent->parent)
+        return NULL;
+    return (t->parent == t->parent->parent->left ? t->parent->parent->right : t->parent->parent->left);
+}
+
+bool check_rb_black_num(BTree *t)
+{
+    int lnum, rnum;
+
+    if (!t)
+        return true;
+
+    lnum = get_bnode_num(t->left);
+    rnum = get_bnode_num(t->right);
+    if (lnum != rnum)
+        return false;
+
+    return check_rb_black_num(t->left) & check_rb_black_num(t->right);
+}
+
+int get_bnode_num(BTree *t)
+{
+    int num = 0;
+    int lnum, rnum;
+
+    if (!t)
+        return 0;
+
+    if (t->color == Black)
+        ++num;
+
+    lnum = get_bnode_num(t->left);
+    rnum = get_bnode_num(t->right);
+    num += (lnum > rnum ? lnum : rnum);
+    return num;
+}
+
+bool check_rb_red(BTree *t)
+{
+    BTree *lnode, *rnode;
+
+    if (!t)
+        return true;
+    if (t->color != Red && t->color != Black)
+        return false;
+
+    lnode = t->left;
+    rnode = t->right;
+
+    if (t->color == Red) {
+        if (lnode && lnode->color == Red)
+            return false;
+        if (rnode && rnode->color == Red)
+            return false;
+    }
+
+    return check_rb_red(lnode) & check_rb_red(rnode);
+}
+
+bool check_rb_tree(BTree *t)
+{
+    if (!t)
+        return true;
+    if (t->color != Black)
+        return false;
+    return check_rb_red(t) & check_rb_black_num(t);
 }
