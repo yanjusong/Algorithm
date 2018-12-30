@@ -27,6 +27,9 @@
     <ClCompile Include="test_avl.c">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="rb.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="tree.h">
@@ -36,6 +39,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="avl.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="rb.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
