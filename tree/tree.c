@@ -225,8 +225,13 @@ void print_level(asciinode *node, int x, int level)
         SetConsoleTextAttribute(hd, FOREGROUND_RED |
                                 FOREGROUND_GREEN |
                                 FOREGROUND_BLUE);
+
 #else
-        printf("\033[31m%s\033[0m", node->label);
+        if (node->color == Red) {
+            printf("\033[31m%s\033[0m", node->label);
+        } else {
+            printf("%s", node->label);
+        }
 #endif
 
         print_next += node->lablen;
