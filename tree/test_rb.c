@@ -1,4 +1,4 @@
-﻿#include "tree.h"
+#include "tree.h"
 #include "rb.h"
 
 #include <stdio.h>
@@ -14,8 +14,8 @@ void test_rb()
     srand((unsigned)time(NULL));
 
     BTree *root = NULL;
-    for (i = 0; i < 100; ++i) {
-        tmp = rand() % 100;
+    for (i = 0; i < 50; ++i) {
+        tmp = rand() % 50;
         root = rb_insert(tmp, root);
         isrb = check_rb_tree(root);
         if (isrb == false)
@@ -26,19 +26,13 @@ void test_rb()
     }
     printf("\n\nRB Tree performance: unrb(%d)\n", unrb);
 
-    //for (i = 0; i < 50; ++i) {
-    //    tmp = rand() % 50;
-    //    root = avl_delete(tmp, root);
-    //    issorted = check_sorted(root);
-    //    isbalanced = check_balanced(root);
-    //    if (issorted == false)
-    //        ++unsorted;
-    //    if (isbalanced == false)
-    //        ++unbalanced;
+    for (i = 0; i < 50; ++i) {
+        tmp = rand() % 50;
+        root = rb_delete(tmp, root);
 
-    //    printf("-------------------------------------------------------\t%d: deleted(%d), sorted(%d), balanced(%d)\n", i, tmp, issorted, isbalanced);
-    //    print_ascii_tree(root);
-    //}
+        printf("-------------------------------------------------------\t%d: deleted(%d)\n", i, tmp);
+        print_ascii_tree(root);
+    }
 
     make_empty(root);
 }

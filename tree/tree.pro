@@ -7,9 +7,11 @@ SOURCES += \
     bst.c \
     tree.c \
     avl.c \
-    test_avl.c
+    rb.c \
+    test_rb.c
 
 HEADERS += \
     bst.h \
     tree.h \
-    avl.h
+    avl.h \
+    rb.h
