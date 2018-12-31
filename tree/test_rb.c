@@ -14,8 +14,9 @@ void test_rb()
     srand((unsigned)time(NULL));
 
     BTree *root = NULL;
-    for (i = 0; i < 50; ++i) {
-        tmp = rand() % 50;
+
+    for (i = 0; i < 100; ++i) {
+        tmp = rand() % 100;
         root = rb_insert(tmp, root);
         isrb = check_rb_tree(root);
         if (isrb == false)
@@ -24,17 +25,21 @@ void test_rb()
         printf("-------------------------------------------------------\t%d: inserted(%d), rb(%d)\n", i + 1, tmp, isrb);
         print_ascii_tree(root);
     }
-    printf("\n\nRB Tree performance: unrb(%d)\n", unrb);
 
-    for (i = 0; i < 50; ++i) {
+    for (i = 0; i < 200; ++i) {
         tmp = rand() % 50;
         root = rb_delete(tmp, root);
 
-        printf("-------------------------------------------------------\t%d: deleted(%d)\n", i, tmp);
+        isrb = check_rb_tree(root);
+        if (isrb == false)
+            ++unrb;
+
+        printf("-------------------------------------------------------\t%d: deleted(%d), rb(%d)\n", i + 1, tmp, isrb);
         print_ascii_tree(root);
     }
 
     make_empty(root);
+    printf("\n\nRB Tree performance: unrb(%d)\n", unrb);
 }
 
 int main()

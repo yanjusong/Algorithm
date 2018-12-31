@@ -10,12 +10,6 @@
 // 4. 红色结点的孩子结点都为黑色。
 // 5. 从根结点到叶子结点的所有简单路径包含的黑色结点数目一样。
 
-
-BTree *rb_ll_rotate(BTree *t);
-BTree *rb_rr_rotate(BTree *t);
-BTree *rb_lr_rotate(BTree *t);
-BTree *rb_rl_rotate(BTree *t);
-
 /*
  * @brief: 在红黑树中插入特定值的结点，并且调整为红黑树特性的树
  * @params:

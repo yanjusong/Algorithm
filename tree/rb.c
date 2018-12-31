@@ -3,7 +3,12 @@
 
 #include <stdlib.h>
 
-static void adjust_color(BTree *t, BTree **p)
+static BTree *rb_ll_rotate(BTree *t);
+static BTree *rb_rr_rotate(BTree *t);
+static BTree *rb_lr_rotate(BTree *t);
+static BTree *rb_rl_rotate(BTree *t);
+
+static void adjust_color_inserted(BTree *t, BTree **p)
 {
     BTree *puncle;
     BTree *pgparent;
@@ -26,7 +31,7 @@ static void adjust_color(BTree *t, BTree **p)
         puncle->color = Black;
         t->parent->color = Black;
         pgparent->color = Red;
-        adjust_color(pgparent, p);
+        adjust_color_inserted(pgparent, p);
         return;
     }
 
@@ -53,8 +58,140 @@ static void adjust_color(BTree *t, BTree **p)
     } else {
         t = rb_rr_rotate(pgparent);
     }
-    adjust_color(pgparent, p);
+    adjust_color_inserted(pgparent, p);
  }
+
+static void adjust_color_deleted(BTree *p, BTree *sib, BTree **root)
+{
+    BTree *parent = NULL;
+    BTree *gparent = NULL;
+    BTree *sibling = NULL;
+    BTree *tmp_cell = NULL;
+    BTree *lsib, *rsib;
+
+    if (!p) {
+        return;
+    }
+
+    parent = p;
+    sibling = sib;
+
+    // 兄弟结点是红色
+    if (sibling->color == Red) {
+        if (sibling == parent->left) {
+            parent->color = Red;
+            sibling->color = Black;
+            tmp_cell = rb_ll_rotate(parent);
+            if (!tmp_cell->parent)
+                *root = tmp_cell;
+            parent = tmp_cell->right;
+            sibling = parent->left;
+            adjust_color_deleted(parent, sibling, root);
+        } else {
+            parent->color = Red;
+            sibling->color = Black;
+            tmp_cell = rb_rr_rotate(parent);
+            if (!tmp_cell->parent)
+                *root = tmp_cell;
+            parent = tmp_cell->left;
+            sibling = parent->right;
+            adjust_color_deleted(parent, sibling, root);
+        }
+        return;
+    }
+
+    lsib = sibling->left;
+    rsib = sibling->right;
+    // 兄弟结点为黑色，并且兄弟结点两个孩子结点都为黑色
+    if ((!lsib || lsib->color == Black) && (!rsib || rsib->color == Black)) {
+        sibling->color = Red;
+        if (parent->color == Red) {
+            parent->color = Black;
+            return;
+        }
+        gparent = parent->parent;
+        sibling = NULL;
+        if (gparent)
+            sibling = (gparent->left == parent ? gparent->right : gparent->left);
+        adjust_color_deleted(gparent, sibling, root);
+    }
+
+    // 兄弟结点为黑色，并且兄弟结点两个孩子结点左红右黑
+    if (sibling == parent->right && lsib && lsib->color == Red && (!rsib || rsib->color == Black)) {
+        sibling->color = Red;
+        lsib->color = Black;
+        tmp_cell = rb_ll_rotate(sibling);
+        if (!tmp_cell->parent)
+            *root = tmp_cell;
+        parent = tmp_cell->parent;
+        sibling = parent->right;
+        adjust_color_deleted(parent, sibling, root);
+        return;
+    }
+
+    // 兄弟结点为黑色，并且兄弟结点两个孩子结点左黑右红
+    if (sibling == parent->left && rsib && rsib->color == Red && (!lsib || lsib->color == Black)) {
+        sibling->color = Red;
+        rsib->color = Black;
+        tmp_cell = rb_rr_rotate(sibling);
+        if (!tmp_cell->parent)
+            *root = tmp_cell;
+        parent = tmp_cell->parent;
+        sibling = parent->left;
+        adjust_color_deleted(parent, sibling, root);
+        return;
+    }
+
+    // 兄弟结点为黑色，并且兄弟结点右孩子结点为红色
+    if (sibling == parent->right && rsib && rsib->color == Red) {
+        sibling->color = parent->color;
+        parent->color = Black;
+        sibling->right->color = Black;
+        tmp_cell = rb_rr_rotate(parent);
+        if (!tmp_cell->parent)
+            *root = tmp_cell;
+    }
+
+    // 兄弟结点为黑色，并且兄弟结点左孩子结点为红色
+    if (sibling == parent->left && lsib && lsib->color == Red) {
+        sibling->color = parent->color;
+        parent->color = Black;
+        sibling->left->color = Black;
+        tmp_cell = rb_ll_rotate(parent);
+        if (!tmp_cell->parent)
+            *root = tmp_cell;
+    }
+}
+
+static BTree *find_delete_node(int value, BTree *t, BTree **dnode)
+{
+    BTree *tmp_cell;
+
+    if (t == NULL) return NULL;
+
+    if (value < t->element) {
+        tmp_cell = find_delete_node(value, t->left, dnode);
+        if (tmp_cell)
+            tmp_cell->parent = t;
+        t->left = tmp_cell;
+    } else if (value > t->element) {
+        tmp_cell = find_delete_node(value, t->right, dnode);
+        if (tmp_cell)
+            tmp_cell->parent = t;
+        t->right = tmp_cell;
+    } else if (t->left && t->right) {
+        tmp_cell = find_min(t->right);
+        t->element = tmp_cell->element;
+        tmp_cell = find_delete_node(t->element, t->right, dnode);
+        if (tmp_cell)
+            tmp_cell->parent = t;
+        t->right = tmp_cell;
+    } else {
+        *dnode = t;
+    }
+
+    return t;
+}
 
 BTree *rb_insert(int value, BTree *t)
 {
@@ -90,108 +227,21 @@ BTree *rb_insert(int value, BTree *t)
     else
         p->right = tmp_cell;
 
-    adjust_color(tmp_cell, &t);
-
-    return t;
-}
-
-static void adjust_color2(BTree *p)
-{
-    BTree *parent;
-    BTree *sibling;
-    BTree *tmp_cell;
-    BTree *lsib, *rsib;
-
-    parent = p;
-    if (!parent) {
-        return;
-    }
-
-    sibling = p->right;
-    if (!sibling)
-        adjust_color2(parent->parent);
-
-    // 兄弟结点红色
-    if (sibling->color == Red) {
-        parent->color = Red;
-        tmp_cell = rb_rr_rotate(parent);
-        adjust_color2(tmp_cell->left);
-        return;
-    }
-
-    lsib = sibling->left;
-    rsib = sibling->right;
-    // 兄弟结点为黑色，且两个孩子都是黑色
-    if ((!lsib || lsib->color == Black) && (!rsib || rsib->color == Black)) {
-        sibling->color = Black;
-        adjust_color2(parent->parent);
-        return;
-    }
-
-    // 兄弟结点为黑色，兄弟结点两个孩子左红右黑
-    if ((lsib && lsib->color == Red) && (!rsib || rsib->color == Black)) {
-        lsib->color = Black;
-        sibling->color = Red;
-        tmp_cell = rb_ll_rotate(sibling);
-        adjust_color2(parent);
-        return;
-    }
-
-    // 兄弟结点为黑色，兄弟结点两个孩子右红
-    sibling->color = parent->color;
-    parent->color = Black;
-    if (sibling->right)
-        sibling->right->color = Black;
-
-    tmp_cell = rb_rr_rotate(parent);
-
-    if (tmp_cell->parent)
-        adjust_color2(tmp_cell->parent->parent);
-}
-
-BTree *find_delete_node(int value, BTree *t, BTree **dnode)
-{
-    BTree *tmp_cell;
-
-    if (t == NULL) return NULL;
-
-    if (value < t->element) {
-        tmp_cell = find_delete_node(value, t->left, dnode);
-        if (tmp_cell)
-            tmp_cell->parent = t->left;
-        t->left = tmp_cell;
-    } else if (value > t->element) {
-        tmp_cell = find_delete_node(value, t->right, dnode);
-        if (tmp_cell)
-            tmp_cell->parent = t->right;
-        t->right = tmp_cell;
-    } else if (t->left && t->right) {
-        tmp_cell = find_min(t->right);
-        t->element = tmp_cell->element;
-        tmp_cell = find_delete_node(t->element, t->right, dnode);
-        if (tmp_cell)
-            tmp_cell->parent = t->right;
-        t->right = tmp_cell;
-    } else {
-        *dnode = t;
-//        tmp_cell = t;
-//        if (t->left == NULL)
-//            t = t->right;
-//        else if (t->right == NULL)
-//            t = t->left;
-//        free(tmp_cell);
-    }
+    adjust_color_inserted(tmp_cell, &t);
 
     return t;
 }
 
 BTree *rb_delete(int value, BTree *t)
 {
-    return NULL;
     BTree *tmp_cell;
     BTree *sibling;
-    BTree *p;
+    BTree *parent;
     BTree *deleted_node = NULL;
+    BTree *root;
+
+    if (!t)
+        return NULL;
 
     find_delete_node(value, t, &deleted_node);
 
@@ -200,14 +250,15 @@ BTree *rb_delete(int value, BTree *t)
         return t;
 
     // 父节点
-    p = deleted_node->parent;
+    parent = deleted_node->parent;
 
-    // 如果父节点为空,find_delete_node没有找到右子树最小的结点
-    // 那么就删他自己,有红黑树的性质可知此时左子树只有一个结点且为红色
-    if (!p) {
-        t = deleted_node->left;
-        t->color = Black;
-        t->parent = NULL;
+    // 如果父节点为空，要删除的节点就是根节点
+    if (!parent) {
+        t = (deleted_node->left ? deleted_node->left : deleted_node->right);
+        if (t) {
+            t->color = Black;
+            t->parent = NULL;
+        }
         free(deleted_node);
         return t;
     }
@@ -218,10 +269,10 @@ BTree *rb_delete(int value, BTree *t)
         tmp_cell->color = Black;
         tmp_cell->parent = t->parent;
 
-        if (deleted_node == p->left)
-            p->left = tmp_cell;
+        if (deleted_node == parent->left)
+            parent->left = tmp_cell;
         else
-            p->right = tmp_cell;
+            parent->right = tmp_cell;
 
         free(deleted_node);
         return t;
@@ -229,24 +280,30 @@ BTree *rb_delete(int value, BTree *t)
 
     // 被删除的是红色结点且有两个NULL结点
     if (deleted_node->color == Red) {
-        if (p->left == deleted_node)
-            p->left = NULL;
+        if (parent->left == deleted_node)
+            parent->left = NULL;
         else
-            p->right = NULL;
+            parent->right = NULL;
 
         free(deleted_node);
         return t;
     }
 
     // 被删除结点为黑色且有两个NULL结点
-    sibling = (p->left == deleted_node ? p->right : p->left);
-    if (p->left == deleted_node)
-        p->left = NULL;
+    sibling = (parent->left == deleted_node ? parent->right : parent->left);
+    if (parent->left == deleted_node)
+        parent->left = NULL;
     else
-        p->right = NULL;
-    adjust_color2(p);
+        parent->right = NULL;
+    root = t;
+    adjust_color_deleted(parent, sibling, &root);
     free(deleted_node);
+    root->color = Black;
+    return root;
 }
+
+//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 
 BTree *rb_ll_rotate(BTree *t)
 {
