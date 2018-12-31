@@ -1,4 +1,4 @@
-﻿#include "avl.h"
+#include "avl.h"
 #include "bst.h"
 
 #include <stdlib.h>

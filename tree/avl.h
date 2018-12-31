@@ -1,4 +1,4 @@
-﻿#ifndef AVL_TREE_H_201812228
+#ifndef AVL_TREE_H_201812228
 #define AVL_TREE_H_201812228
 
 #include "tree.h"
