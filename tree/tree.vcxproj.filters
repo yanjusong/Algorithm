@@ -27,7 +27,7 @@
     <ClCompile Include="rb.c">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="test_rb.c">
+    <ClCompile Include="test_performance.c">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

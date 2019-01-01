@@ -69,9 +69,8 @@ static void adjust_color_deleted(BTree *p, BTree *sib, BTree **root)
     BTree *tmp_cell = NULL;
     BTree *lsib, *rsib;
 
-    if (!p) {
+    if (!p) 
         return;
-    }
 
     parent = p;
     sibling = sib;
@@ -167,7 +166,8 @@ static BTree *find_delete_node(int value, BTree *t, BTree **dnode)
 {
     BTree *tmp_cell;
 
-    if (t == NULL) return NULL;
+    if (t == NULL) 
+        return NULL;
 
     if (value < t->element) {
         tmp_cell = find_delete_node(value, t->left, dnode);

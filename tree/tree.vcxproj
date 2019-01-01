@@ -81,7 +81,7 @@
     <ClCompile Include="avl.c" />
     <ClCompile Include="bst.c" />
     <ClCompile Include="rb.c" />
-    <ClCompile Include="test_rb.c" />
+    <ClCompile Include="test_performance.c" />
     <ClCompile Include="tree.c" />
   </ItemGroup>
   <ItemGroup>
