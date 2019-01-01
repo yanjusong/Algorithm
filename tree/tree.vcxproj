@@ -81,6 +81,7 @@
     <ClCompile Include="avl.c" />
     <ClCompile Include="bst.c" />
     <ClCompile Include="rb.c" />
+    <ClCompile Include="deque.c" />
     <ClCompile Include="test_performance.c" />
     <ClCompile Include="tree.c" />
   </ItemGroup>
@@ -88,6 +89,7 @@
     <ClInclude Include="avl.h" />
     <ClInclude Include="bst.h" />
     <ClInclude Include="rb.h" />
+    <ClInclude Include="deque.h" />
     <ClInclude Include="tree.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

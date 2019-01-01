@@ -73,10 +73,10 @@ int test()
         return -1;
 
     for (i = 0; i < INSTERT_NUM; ++i)
-        g_insert_nums[i] = rand() % 5000;
+        g_insert_nums[i] = rand() % 5000000;
 
     for (i = 0; i < DELETE_NUM; ++i)
-        g_delete_nums[i] = rand() % 5000;
+        g_delete_nums[i] = rand() % 5000000;
 
     for (i = 0; i < SEARCH_NUM; ++i)
         g_search_nums[i] = g_insert_nums[i];
