@@ -54,12 +54,12 @@ int gap = 3;
 //this is the x coordinate of the next char printed
 int print_next;
 
-int MIN(int X, int Y)
+static int MIN(int X, int Y)
 {
     return ((X) < (Y)) ? (X) : (Y);
 }
 
-int MAX(int X, int Y)
+static int MAX(int X, int Y)
 {
     return ((X) > (Y)) ? (X) : (Y);
 }
@@ -303,6 +303,7 @@ BTree *getNode(int value)
 
     if (new_node) {
         new_node->element = value;
+        new_node->height = 1;
         new_node->color = None;
         new_node->left = new_node->right = new_node->parent = NULL;
     }

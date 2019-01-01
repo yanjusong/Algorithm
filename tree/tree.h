@@ -21,6 +21,7 @@ struct BTree
 {
     BTree *left, *right;
     int element;
+    int height;
 
     BTree *parent;
     Color color;

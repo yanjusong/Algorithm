@@ -15,8 +15,8 @@ void test_rb()
 
     BTree *root = NULL;
 
-    for (i = 0; i < 100; ++i) {
-        tmp = rand() % 100;
+    for (i = 0; i < 50; ++i) {
+        tmp = rand() % 50;
         root = rb_insert(tmp, root);
         isrb = check_rb_tree(root);
         if (isrb == false)

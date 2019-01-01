@@ -7,9 +7,9 @@
 #include "avl.h"
 #include "rb.h"
 
-#define INSTERT_NUM 100000
-#define DELETE_NUM  100000
-#define SEARCH_NUM  100000
+#define INSTERT_NUM 10000000
+#define DELETE_NUM  10000000
+#define SEARCH_NUM  10000000
 
 int *g_insert_nums;
 int *g_delete_nums;

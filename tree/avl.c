@@ -3,6 +3,19 @@
 
 #include <stdlib.h>
 
+static int MAX(int X, int Y)
+{
+    return ((X) > (Y)) ? (X) : (Y);
+}
+
+static int HEIGHT(BTree *t)
+{
+    if (t)
+        return t->height;
+    else
+        return 0;
+}
+
 BTree *avl_insert(int value, BTree *t)
 {
     int lh, rh;
@@ -12,8 +25,8 @@ BTree *avl_insert(int value, BTree *t)
 
     if (value < t->element) {
         t->left = avl_insert(value, t->left);
-        lh = height(t->left);
-        rh = height(t->right);
+        lh = HEIGHT(t->left);
+        rh = HEIGHT(t->right);
 
         if (lh - rh == 2) {
             if (value < t->left->element) {
@@ -27,8 +40,8 @@ BTree *avl_insert(int value, BTree *t)
 
     } else if (value > t->element) {
         t->right = avl_insert(value, t->right);
-        lh = height(t->left);
-        rh = height(t->right);
+        lh = HEIGHT(t->left);
+        rh = HEIGHT(t->right);
 
         if (rh - lh == 2) {
             if (value > t->right->element) {
@@ -43,6 +56,8 @@ BTree *avl_insert(int value, BTree *t)
     } else {
         //duplicate, ignore it
     }
+
+    t->height = MAX(HEIGHT(t->left), HEIGHT(t->right)) + 1;
     return t;
 }
 
@@ -51,6 +66,9 @@ BTree *avl_ll_rotate(BTree *t)
     BTree *ori_left = t->left;
     t->left = ori_left->right;
     ori_left->right = t;
+
+    t->height = MAX(HEIGHT(t->left), HEIGHT(t->right)) + 1;
+    ori_left->height = MAX(HEIGHT(ori_left->left), t->height) + 1;
     return ori_left;
 }
 
@@ -59,6 +77,10 @@ BTree *avl_rr_rotate(BTree *t)
     BTree *ori_right = t->right;
     t->right = ori_right->left;
     ori_right->left = t;
+
+    t->height = MAX(HEIGHT(t->left), HEIGHT(t->right)) + 1;
+    ori_right->height = MAX(HEIGHT(ori_right->right), t->height) + 1;
+
     return ori_right;
 }
 
@@ -83,14 +105,14 @@ BTree *avl_delete(int value, BTree *t)
 
     if (value < t->element) {
         t->left = avl_delete(value, t->left);
-        lh = height(t->left);
-        rh = height(t->right);
+        lh = HEIGHT(t->left);
+        rh = HEIGHT(t->right);
 
         // 删除左子树的结点，左子树高度可能降低
         if (rh - lh == 2) {
             tmp_cell = t->right;
-            lh = height(tmp_cell->left);
-            rh = height(tmp_cell->right);
+            lh = HEIGHT(tmp_cell->left);
+            rh = HEIGHT(tmp_cell->right);
 
             if (lh > rh)
                 t = avl_rl_rotate(t);
@@ -100,14 +122,14 @@ BTree *avl_delete(int value, BTree *t)
     } else if (value > t->element) {
         t->right = avl_delete(value, t->right);
 
-        lh = height(t->left);
-        rh = height(t->right);
+        lh = HEIGHT(t->left);
+        rh = HEIGHT(t->right);
 
         // 删除右子树的结点，右子树高度可能降低
         if (lh - rh == 2) {
             tmp_cell = t->left;
-            lh = height(tmp_cell->left);
-            rh = height(tmp_cell->right);
+            lh = HEIGHT(tmp_cell->left);
+            rh = HEIGHT(tmp_cell->right);
 
             if (rh > lh)
                 t = avl_lr_rotate(t);
@@ -116,7 +138,7 @@ BTree *avl_delete(int value, BTree *t)
         }
     } else if (t->left && t->right) {
         // 如果左子树高于右子树，则取左子树的最大值作为新的根结点
-        if (height(t->left) > height(t->right)) {
+        if (HEIGHT(t->left) > HEIGHT(t->right)) {
             tmp_cell = find_max(t->left);
             t->element = tmp_cell->element;
             t->left = avl_delete(tmp_cell->element, t->left);
@@ -135,5 +157,7 @@ BTree *avl_delete(int value, BTree *t)
         free(tmp_cell);
     }
 
+    if (t)
+        t->height = MAX(HEIGHT(t->left), HEIGHT(t->right)) + 1;
     return t;
 }
