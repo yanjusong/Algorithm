@@ -1,4 +1,5 @@
 #include "tree.h"
+#include "deque.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -425,4 +426,141 @@ bool check_rb_tree(BTree *t)
     if (t->color != Black)
         return false;
     return check_rb_red(t) & check_rb_black_num(t);
+}
+
+void preorder_travel_recur(BTree *t, UserFunc func, void *udata)
+{
+    if (!t)
+        return;
+
+    func(t, udata);
+    preorder_travel_recur(t->left, func, udata);
+    preorder_travel_recur(t->right, func, udata);
+}
+
+void inorder_travel_recur(BTree *t, UserFunc func, void *udata)
+{
+    if (!t)
+        return;
+
+    inorder_travel_recur(t->left, func, udata);
+    func(t, udata);
+    inorder_travel_recur(t->right, func, udata);
+}
+
+void postorder_travel_recur(BTree *t, UserFunc func, void *udata)
+{
+    if (!t)
+        return;
+
+    postorder_travel_recur(t->left, func, udata);
+    postorder_travel_recur(t->right, func, udata);
+    func(t, udata);
+}
+
+void preorder_travel_stack(BTree *t, UserFunc func, void *udata)
+{
+    Deque *dq = NULL;
+    BTree *cur_node;
+
+    if (!t)
+        return;
+    if (!(dq = new_deque()))
+        return;
+
+    push_back(dq, t, BTree *);
+    while (!is_empty(dq)) {
+        cur_node = back(dq, BTree *);
+        func(cur_node, udata);
+        pop_back(dq);
+        if (cur_node->right)
+            push_back(dq, cur_node->right, BTree *);
+        if (cur_node->left)
+            push_back(dq, cur_node->left, BTree *);
+    }
+
+    delete_deque(dq);
+}
+
+void inorder_travel_stack(BTree *t, UserFunc func, void *udata)
+{
+    Deque *dq = NULL;
+    BTree *cur_node = NULL;
+
+    if (!t)
+        return;
+    if (!(dq = new_deque()))
+        return;
+
+    cur_node = t;
+
+    while (!is_empty(dq) || cur_node) {
+        if (cur_node) {
+            push_back(dq, cur_node, BTree *);
+            cur_node = cur_node->left;
+        } else {
+            cur_node = back(dq, BTree *);
+            func(cur_node, udata);
+            pop_back(dq);
+            cur_node = cur_node->right;
+        }
+    }
+
+    delete_deque(dq);
+}
+
+void postorder_travel_stack(BTree *t, UserFunc func, void *udata)
+{
+    Deque *dq = NULL;
+    BTree *cur_node = NULL;
+    BTree *pre_node = NULL;
+    BTree *p = t;
+
+    if (!t)
+        return;
+    if (!(dq = new_deque()))
+        return;
+
+    while (!is_empty(dq) || p) {
+        if (p) {
+            push_back(dq, p, BTree *);
+            p = p->left;
+        } else {
+            cur_node = back(dq, BTree *);
+            if (cur_node->right && pre_node != cur_node->right) {
+                p = cur_node->right;
+            } else {
+                func(cur_node, udata);
+                pop_back(dq);
+                pre_node = cur_node;
+            }
+        }
+    }
+
+    delete_deque(dq);
+}
+
+void levelorder_trabel(BTree *t, UserFunc func, void *udata)
+{
+    Deque *dq = NULL;
+    BTree *cur_node = NULL;
+
+    if (!t)
+        return;
+    if (!(dq = new_deque()))
+        return;
+
+    push_back(dq, t, BTree *);
+
+    while (!is_empty(dq)) {
+        cur_node = front(dq, BTree *);
+        func(cur_node, udata);
+        if (cur_node->left)
+            push_back(dq, cur_node->left, BTree *);
+        if (cur_node->right)
+            push_back(dq, cur_node->right, BTree *);
+        pop_front(dq);
+    }
+
+    delete_deque(dq);
 }

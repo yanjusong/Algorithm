@@ -27,6 +27,8 @@ struct BTree
     Color color;
 };
 
+#define UNUSED(x) (void)x;
+
 /*
  * @brief: 释放树的空间
  * @params:
@@ -139,5 +141,39 @@ bool check_rb_black_num(BTree *t);
  *    1(true):  符合
  */
 bool check_rb_red(BTree *t);
+
+/*
+ * @brief: 操作结点
+ * @params: 
+ *    BTree *t: 结点
+ *    void *udata: 用户数据
+ */
+typedef void(*UserFunc)(BTree *t, void *udata);
+
+/*
+ * @brief: 遍历
+ *    preorder_travel_recur:  递归前序遍历
+ *    preorder_travel_stack:  用栈辅助前序遍历
+ *    inorder_travel_recur:   递归中序遍历
+ *    inorder_travel_stack:   用栈辅助中序遍历
+ *    postorder_travel_recur: 递归后序遍历
+ *    postorder_travel_stack: 用栈辅助后序遍历
+ *    levelorder_trabel:      层次遍历
+ * @params:
+ *    BTree *t: 根结点
+ *    UserFunc func: 操作结点函数
+ *    void *udata: 用户数据
+ */
+
+void preorder_travel_recur(BTree *t, UserFunc func, void *udata);
+void preorder_travel_stack(BTree *t, UserFunc func, void *udata);
+
+void inorder_travel_recur(BTree *t, UserFunc func, void *udata);
+void inorder_travel_stack(BTree *t, UserFunc func, void *udata);
+
+void postorder_travel_recur(BTree *t, UserFunc func, void *udata);
+void postorder_travel_stack(BTree *t, UserFunc func, void *udata);
+
+void levelorder_trabel(BTree *t, UserFunc func, void *udata);
 
 #endif // !TREE_H_20181227

@@ -82,7 +82,7 @@
     <ClCompile Include="bst.c" />
     <ClCompile Include="rb.c" />
     <ClCompile Include="deque.c" />
-    <ClCompile Include="test_performance.c" />
+    <ClCompile Include="test_traveltree.c" />
     <ClCompile Include="tree.c" />
   </ItemGroup>
   <ItemGroup>

@@ -120,7 +120,7 @@ int size(Deque *dq)
 
 int is_empty(Deque *dq)
 {
-    return (size(dq) == 0 ? 0 : 1);
+    return (size(dq) == 0 ? 1 : 0);
 }
 
 void clear(Deque *dq)

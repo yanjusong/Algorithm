@@ -52,6 +52,7 @@ int size(Deque *dq);
 int is_empty(Deque *dq);
 void clear(Deque *dq);
 
+// Do not using following functions.
 Item *BACK(Deque *dq);
 Item *FRONT(Deque *dq);
 void PUSH_BACK(Deque *dq, void *data, size_t len);

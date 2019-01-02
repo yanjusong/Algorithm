@@ -27,10 +27,10 @@
     <ClCompile Include="rb.c">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="test_performance.c">
+    <ClCompile Include="deque.c">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="deque.c">
+    <ClCompile Include="test_traveltree.c">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
