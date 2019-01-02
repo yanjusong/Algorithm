@@ -1,4 +1,5 @@
-﻿#include "tree.h"
+#include "tree.h"
+#include "bst.h"
 
 #include <stdio.h>
 #include <stdlib.h>
