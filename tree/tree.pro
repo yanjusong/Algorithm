@@ -8,10 +8,14 @@ SOURCES += \
     tree.c \
     avl.c \
     rb.c \
-    test_rb.c
+    deque.c \
+    test_traveltree.c \
+    b.c
 
 HEADERS += \
     bst.h \
     tree.h \
     avl.h \
-    rb.h
+    rb.h \
+    deque.h \
+    b.h
