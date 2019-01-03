@@ -15,7 +15,7 @@ void test_avl()
 
     srand((unsigned)time(NULL));
 
-    BTree *root = NULL;
+    BSTree *root = NULL;
     for (i = 0; i < 50; ++i) {
         tmp = rand() % 50;
         root = avl_insert(tmp, root);

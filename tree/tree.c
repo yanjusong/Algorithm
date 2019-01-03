@@ -9,7 +9,7 @@
 #include <Windows.h>
 #endif
 
-void make_empty(BTree *t)
+void make_empty(BSTree *t)
 {
     if (t) {
         make_empty(t->left);
@@ -65,7 +65,7 @@ static int MAX(int X, int Y)
     return ((X) > (Y)) ? (X) : (Y);
 }
 
-asciinode *build_ascii_tree_recursive(BTree *t)
+asciinode *build_ascii_tree_recursive(BSTree *t)
 {
     asciinode *node;
 
@@ -92,7 +92,7 @@ asciinode *build_ascii_tree_recursive(BTree *t)
 
 
 //Copy the tree into the ascii node structre
-asciinode *build_ascii_tree(BTree *t)
+asciinode *build_ascii_tree(BSTree *t)
 {
     asciinode *node;
     if (t == NULL) return NULL;
@@ -264,7 +264,7 @@ void print_level(asciinode *node, int x, int level)
 }
 
 //prints ascii tree for given Tree structure
-void print_ascii_tree(BTree *t)
+void print_ascii_tree(BSTree *t)
 {
     asciinode *proot;
     int xmin, i;
@@ -290,7 +290,7 @@ void print_ascii_tree(BTree *t)
     free_ascii_tree(proot);
 }
 
-int height(BTree *t)
+int height(BSTree *t)
 {
     if (!t)
         return 0;
@@ -298,9 +298,9 @@ int height(BTree *t)
     return MAX(height(t->left), height(t->right)) + 1;
 }
 
-BTree *getNode(int value)
+BSTree *getNode(int value)
 {
-    BTree *new_node = (BTree *)malloc(sizeof(BTree));
+    BSTree *new_node = (BSTree *)malloc(sizeof(BSTree));
 
     if (new_node) {
         new_node->element = value;
@@ -312,7 +312,7 @@ BTree *getNode(int value)
     return new_node;
 }
 
-bool check_sorted(BTree *t)
+bool check_sorted(BSTree *t)
 {
     bool stat = true;
 
@@ -324,7 +324,7 @@ bool check_sorted(BTree *t)
     return stat;
 }
 
-bool check_balanced(BTree *t)
+bool check_balanced(BSTree *t)
 {
     bool stat = true;
     int lh, rh;
@@ -345,7 +345,7 @@ bool check_balanced(BTree *t)
     return stat;
 }
 
-BTree *grandparent(BTree *t)
+BSTree *grandparent(BSTree *t)
 {
     if (!t)
         return NULL;
@@ -354,7 +354,7 @@ BTree *grandparent(BTree *t)
     return t->parent->parent;
 }
 
-BTree *uncle(BTree *t)
+BSTree *uncle(BSTree *t)
 {
     if (!t)
         return NULL;
@@ -365,7 +365,7 @@ BTree *uncle(BTree *t)
     return (t->parent == t->parent->parent->left ? t->parent->parent->right : t->parent->parent->left);
 }
 
-bool check_rb_black_num(BTree *t)
+bool check_rb_black_num(BSTree *t)
 {
     int lnum, rnum;
 
@@ -380,7 +380,7 @@ bool check_rb_black_num(BTree *t)
     return check_rb_black_num(t->left) & check_rb_black_num(t->right);
 }
 
-int get_bnode_num(BTree *t)
+int get_bnode_num(BSTree *t)
 {
     int num = 0;
     int lnum, rnum;
@@ -397,9 +397,9 @@ int get_bnode_num(BTree *t)
     return num;
 }
 
-bool check_rb_red(BTree *t)
+bool check_rb_red(BSTree *t)
 {
-    BTree *lnode, *rnode;
+    BSTree *lnode, *rnode;
 
     if (!t)
         return true;
@@ -419,7 +419,7 @@ bool check_rb_red(BTree *t)
     return check_rb_red(lnode) & check_rb_red(rnode);
 }
 
-bool check_rb_tree(BTree *t)
+bool check_rb_tree(BSTree *t)
 {
     if (!t)
         return true;
@@ -428,7 +428,7 @@ bool check_rb_tree(BTree *t)
     return check_rb_red(t) & check_rb_black_num(t);
 }
 
-void preorder_travel_recur(BTree *t, UserFunc func, void *udata)
+void preorder_travel_recur(BSTree *t, UserFunc func, void *udata)
 {
     if (!t)
         return;
@@ -438,7 +438,7 @@ void preorder_travel_recur(BTree *t, UserFunc func, void *udata)
     preorder_travel_recur(t->right, func, udata);
 }
 
-void inorder_travel_recur(BTree *t, UserFunc func, void *udata)
+void inorder_travel_recur(BSTree *t, UserFunc func, void *udata)
 {
     if (!t)
         return;
@@ -448,7 +448,7 @@ void inorder_travel_recur(BTree *t, UserFunc func, void *udata)
     inorder_travel_recur(t->right, func, udata);
 }
 
-void postorder_travel_recur(BTree *t, UserFunc func, void *udata)
+void postorder_travel_recur(BSTree *t, UserFunc func, void *udata)
 {
     if (!t)
         return;
@@ -458,34 +458,34 @@ void postorder_travel_recur(BTree *t, UserFunc func, void *udata)
     func(t, udata);
 }
 
-void preorder_travel_stack(BTree *t, UserFunc func, void *udata)
+void preorder_travel_stack(BSTree *t, UserFunc func, void *udata)
 {
     Deque *dq = NULL;
-    BTree *cur_node;
+    BSTree *cur_node;
 
     if (!t)
         return;
     if (!(dq = new_deque()))
         return;
 
-    push_back(dq, t, BTree *);
+    push_back(dq, t, BSTree *);
     while (!is_empty(dq)) {
-        cur_node = back(dq, BTree *);
+        cur_node = back(dq, BSTree *);
         func(cur_node, udata);
         pop_back(dq);
         if (cur_node->right)
-            push_back(dq, cur_node->right, BTree *);
+            push_back(dq, cur_node->right, BSTree *);
         if (cur_node->left)
-            push_back(dq, cur_node->left, BTree *);
+            push_back(dq, cur_node->left, BSTree *);
     }
 
     delete_deque(dq);
 }
 
-void inorder_travel_stack(BTree *t, UserFunc func, void *udata)
+void inorder_travel_stack(BSTree *t, UserFunc func, void *udata)
 {
     Deque *dq = NULL;
-    BTree *cur_node = NULL;
+    BSTree *cur_node = NULL;
 
     if (!t)
         return;
@@ -496,10 +496,10 @@ void inorder_travel_stack(BTree *t, UserFunc func, void *udata)
 
     while (!is_empty(dq) || cur_node) {
         if (cur_node) {
-            push_back(dq, cur_node, BTree *);
+            push_back(dq, cur_node, BSTree *);
             cur_node = cur_node->left;
         } else {
-            cur_node = back(dq, BTree *);
+            cur_node = back(dq, BSTree *);
             func(cur_node, udata);
             pop_back(dq);
             cur_node = cur_node->right;
@@ -509,12 +509,12 @@ void inorder_travel_stack(BTree *t, UserFunc func, void *udata)
     delete_deque(dq);
 }
 
-void postorder_travel_stack(BTree *t, UserFunc func, void *udata)
+void postorder_travel_stack(BSTree *t, UserFunc func, void *udata)
 {
     Deque *dq = NULL;
-    BTree *cur_node = NULL;
-    BTree *pre_node = NULL;
-    BTree *p = t;
+    BSTree *cur_node = NULL;
+    BSTree *pre_node = NULL;
+    BSTree *p = t;
 
     if (!t)
         return;
@@ -523,10 +523,10 @@ void postorder_travel_stack(BTree *t, UserFunc func, void *udata)
 
     while (!is_empty(dq) || p) {
         if (p) {
-            push_back(dq, p, BTree *);
+            push_back(dq, p, BSTree *);
             p = p->left;
         } else {
-            cur_node = back(dq, BTree *);
+            cur_node = back(dq, BSTree *);
             if (cur_node->right && pre_node != cur_node->right) {
                 p = cur_node->right;
             } else {
@@ -540,25 +540,25 @@ void postorder_travel_stack(BTree *t, UserFunc func, void *udata)
     delete_deque(dq);
 }
 
-void levelorder_trabel(BTree *t, UserFunc func, void *udata)
+void levelorder_trabel(BSTree *t, UserFunc func, void *udata)
 {
     Deque *dq = NULL;
-    BTree *cur_node = NULL;
+    BSTree *cur_node = NULL;
 
     if (!t)
         return;
     if (!(dq = new_deque()))
         return;
 
-    push_back(dq, t, BTree *);
+    push_back(dq, t, BSTree *);
 
     while (!is_empty(dq)) {
-        cur_node = front(dq, BTree *);
+        cur_node = front(dq, BSTree *);
         func(cur_node, udata);
         if (cur_node->left)
-            push_back(dq, cur_node->left, BTree *);
+            push_back(dq, cur_node->left, BSTree *);
         if (cur_node->right)
-            push_back(dq, cur_node->right, BTree *);
+            push_back(dq, cur_node->right, BSTree *);
         pop_front(dq);
     }
 

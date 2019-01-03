@@ -3,15 +3,15 @@
 
 #include <stdlib.h>
 
-static BTree *rb_ll_rotate(BTree *t);
-static BTree *rb_rr_rotate(BTree *t);
-static BTree *rb_lr_rotate(BTree *t);
-static BTree *rb_rl_rotate(BTree *t);
+static BSTree *rb_ll_rotate(BSTree *t);
+static BSTree *rb_rr_rotate(BSTree *t);
+static BSTree *rb_lr_rotate(BSTree *t);
+static BSTree *rb_rl_rotate(BSTree *t);
 
-static void adjust_color_inserted(BTree *t, BTree **p)
+static void adjust_color_inserted(BSTree *t, BSTree **p)
 {
-    BTree *puncle;
-    BTree *pgparent;
+    BSTree *puncle;
+    BSTree *pgparent;
     t->color = Red;
     if (!t->parent) {
         t->color = Black;
@@ -61,13 +61,13 @@ static void adjust_color_inserted(BTree *t, BTree **p)
     adjust_color_inserted(pgparent, p);
  }
 
-static void adjust_color_deleted(BTree *p, BTree *sib, BTree **root)
+static void adjust_color_deleted(BSTree *p, BSTree *sib, BSTree **root)
 {
-    BTree *parent = NULL;
-    BTree *gparent = NULL;
-    BTree *sibling = NULL;
-    BTree *tmp_cell = NULL;
-    BTree *lsib, *rsib;
+    BSTree *parent = NULL;
+    BSTree *gparent = NULL;
+    BSTree *sibling = NULL;
+    BSTree *tmp_cell = NULL;
+    BSTree *lsib, *rsib;
 
     if (!p) 
         return;
@@ -162,9 +162,9 @@ static void adjust_color_deleted(BTree *p, BTree *sib, BTree **root)
     }
 }
 
-static BTree *find_delete_node(int value, BTree *t, BTree **dnode)
+static BSTree *find_delete_node(int value, BSTree *t, BSTree **dnode)
 {
-    BTree *tmp_cell;
+    BSTree *tmp_cell;
 
     if (t == NULL) 
         return NULL;
@@ -193,10 +193,10 @@ static BTree *find_delete_node(int value, BTree *t, BTree **dnode)
     return t;
 }
 
-BTree *rb_insert(int value, BTree *t)
+BSTree *rb_insert(int value, BSTree *t)
 {
-    BTree *tmp_cell = NULL;
-    BTree *p = NULL;
+    BSTree *tmp_cell = NULL;
+    BSTree *p = NULL;
     bool isleft = false;
 
     if (!t) {
@@ -232,13 +232,13 @@ BTree *rb_insert(int value, BTree *t)
     return t;
 }
 
-BTree *rb_delete(int value, BTree *t)
+BSTree *rb_delete(int value, BSTree *t)
 {
-    BTree *tmp_cell;
-    BTree *sibling;
-    BTree *parent;
-    BTree *deleted_node = NULL;
-    BTree *root;
+    BSTree *tmp_cell;
+    BSTree *sibling;
+    BSTree *parent;
+    BSTree *deleted_node = NULL;
+    BSTree *root;
 
     if (!t)
         return NULL;
@@ -305,9 +305,9 @@ BTree *rb_delete(int value, BTree *t)
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
 
-BTree *rb_ll_rotate(BTree *t)
+BSTree *rb_ll_rotate(BSTree *t)
 {
-    BTree *ori_left = t->left;
+    BSTree *ori_left = t->left;
     if (t->parent) {
         if (t == t->parent->left)
             t->parent->left = ori_left;
@@ -324,9 +324,9 @@ BTree *rb_ll_rotate(BTree *t)
     return ori_left;
 }
 
-BTree *rb_rr_rotate(BTree *t)
+BSTree *rb_rr_rotate(BSTree *t)
 {
-    BTree *ori_right = t->right;
+    BSTree *ori_right = t->right;
     if (t->parent) {
         if (t == t->parent->left)
             t->parent->left = ori_right;
@@ -343,17 +343,17 @@ BTree *rb_rr_rotate(BTree *t)
     return ori_right;
 }
 
-BTree *rb_lr_rotate(BTree *t)
+BSTree *rb_lr_rotate(BSTree *t)
 {
-    BTree *tmp_cell = rb_rr_rotate(t->left);
+    BSTree *tmp_cell = rb_rr_rotate(t->left);
     t->left = tmp_cell;
     tmp_cell->parent = t;
     return rb_ll_rotate(t);
 }
 
-BTree *rb_rl_rotate(BTree *t)
+BSTree *rb_rl_rotate(BSTree *t)
 {
-    BTree *tmp_cell = rb_ll_rotate(t->right);
+    BSTree *tmp_cell = rb_ll_rotate(t->right);
     t->right = tmp_cell;
     tmp_cell->parent = t;
     return rb_rr_rotate(t);

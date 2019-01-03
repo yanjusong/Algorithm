@@ -8,7 +8,7 @@ static int MAX(int X, int Y)
     return ((X) > (Y)) ? (X) : (Y);
 }
 
-static int HEIGHT(BTree *t)
+static int HEIGHT(BSTree *t)
 {
     if (t)
         return t->height;
@@ -16,7 +16,7 @@ static int HEIGHT(BTree *t)
         return 0;
 }
 
-BTree *avl_insert(int value, BTree *t)
+BSTree *avl_insert(int value, BSTree *t)
 {
     int lh, rh;
 
@@ -61,9 +61,9 @@ BTree *avl_insert(int value, BTree *t)
     return t;
 }
 
-BTree *avl_ll_rotate(BTree *t)
+BSTree *avl_ll_rotate(BSTree *t)
 {
-    BTree *ori_left = t->left;
+    BSTree *ori_left = t->left;
     t->left = ori_left->right;
     ori_left->right = t;
 
@@ -72,9 +72,9 @@ BTree *avl_ll_rotate(BTree *t)
     return ori_left;
 }
 
-BTree *avl_rr_rotate(BTree *t)
+BSTree *avl_rr_rotate(BSTree *t)
 {
-    BTree *ori_right = t->right;
+    BSTree *ori_right = t->right;
     t->right = ori_right->left;
     ori_right->left = t;
 
@@ -84,22 +84,22 @@ BTree *avl_rr_rotate(BTree *t)
     return ori_right;
 }
 
-BTree *avl_lr_rotate(BTree *t)
+BSTree *avl_lr_rotate(BSTree *t)
 {
     t->left = avl_rr_rotate(t->left);
     return avl_ll_rotate(t);
 }
 
-BTree *avl_rl_rotate(BTree *t)
+BSTree *avl_rl_rotate(BSTree *t)
 {
     t->right = avl_ll_rotate(t->right);
     return avl_rr_rotate(t);
 }
 
-BTree *avl_delete(int value, BTree *t)
+BSTree *avl_delete(int value, BSTree *t)
 {
     int lh, rh;
-    BTree *tmp_cell;
+    BSTree *tmp_cell;
 
     if (t == NULL) return NULL;
 

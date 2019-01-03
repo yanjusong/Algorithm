@@ -13,7 +13,7 @@ void test_rb()
 
     srand((unsigned)time(NULL));
 
-    BTree *root = NULL;
+    BSTree *root = NULL;
 
     for (i = 0; i < 50; ++i) {
         tmp = rand() % 50;

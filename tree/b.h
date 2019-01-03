@@ -1,4 +1,4 @@
-#ifndef BAYER_H_20190103
+﻿#ifndef BAYER_H_20190103
 #define BAYER_H_20190103
 
 #include <stdlib.h>

@@ -14,18 +14,18 @@
  * @brief: 在红黑树中插入特定值的结点，并且调整为红黑树特性的树
  * @params:
  *    int value: 指定的值
- *    BTree *t:  根结点
+ *    BSTree *t: 根结点
  * @return: 插入新结点后的根结点
  */
-BTree *rb_insert(int value, BTree *t);
+BSTree *rb_insert(int value, BSTree *t);
 
 /*
  * @brief: 删除二叉搜索树中值为特定值的结点，并且调整为红黑树特性的树
  * @params:
  *    int value: 指定的键值
- *    BTree *t:  根结点
+ *    BSTree *t: 根结点
  * @return: 返回删除改结点后的根结点
  */
-BTree *rb_delete(int value, BTree *t);
+BSTree *rb_delete(int value, BSTree *t);
 
 #endif // !RED_BLACK_TREE_H_201811230

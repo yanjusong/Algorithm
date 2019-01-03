@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-void print_node(BTree *t, void *udata)
+void print_node(BSTree *t, void *udata)
 {
     UNUSED(udata);
 
@@ -13,7 +13,7 @@ void print_node(BTree *t, void *udata)
         printf("%d ", t->element);
 }
 
-void test_preorder_travel(BTree *t)
+void test_preorder_travel(BSTree *t)
 {
     printf("\n-------- 先序遍历 --------\n");
 
@@ -26,7 +26,7 @@ void test_preorder_travel(BTree *t)
     printf("\n");
 }
 
-void test_inorder_travel(BTree *t)
+void test_inorder_travel(BSTree *t)
 {
     printf("\n-------- 中序遍历 --------\n");
 
@@ -39,7 +39,7 @@ void test_inorder_travel(BTree *t)
     printf("\n");
 }
 
-void test_postorder_travel(BTree *t)
+void test_postorder_travel(BSTree *t)
 {
     printf("\n-------- 后序遍历 --------\n");
 
@@ -52,7 +52,7 @@ void test_postorder_travel(BTree *t)
     printf("\n");
 }
 
-void test_levelorder_travel(BTree *t)
+void test_levelorder_travel(BSTree *t)
 {
     printf("\n-------- 层次遍历 --------\n");
 
@@ -66,7 +66,7 @@ void test()
     int i, tmp;
     srand((unsigned)time(NULL));
 
-    BTree *root = NULL;
+    BSTree *root = NULL;
     for (i = 0; i < 10; ++i) {
         tmp = rand() % 100;
         root = bst_insert(tmp, root);

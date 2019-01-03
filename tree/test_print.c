@@ -10,7 +10,7 @@ void test_print()
     int i, tmp;
     srand((unsigned)time(NULL));
 
-    BTree *root = NULL;
+    BSTree *root = NULL;
     for (i = 0; i < 50; ++i) {
         tmp = rand() % 1000;
         root = bst_insert(tmp, root);
