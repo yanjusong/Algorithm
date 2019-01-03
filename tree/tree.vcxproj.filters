@@ -33,7 +33,7 @@
     <ClCompile Include="b.c">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="test_traveltree.c">
+    <ClCompile Include="test_btree.c">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

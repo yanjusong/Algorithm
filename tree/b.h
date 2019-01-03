@@ -3,21 +3,26 @@
 
 #include <stdlib.h>
 
-typedef struct BNode BNode;
-typedef struct BNode* PBNode;
+#define MAX_STR_SIZE 5000
 
-struct BNode
+typedef struct BTree BTree;
+typedef struct BTree* PBTree;
+
+struct BTree
 {
     size_t m;
-    PBNode *child;
-    BNode *parent;
+    size_t childcnt;
+    PBTree *child;
+    BTree *parent;
     int *element;
 };
 
-BNode *new_bnode(size_t m);
+BTree *new_bnode(size_t m);
 
-void delete_bnode(BNode *bn);
+void delete_bnode(BTree *bn);
 
-void print_bnode(BNode *bn);
+BTree *b_insert(int value, BTree *t);
+
+void print_bnode(BTree *bn);
 
 #endif // !BAYER_H_20190103

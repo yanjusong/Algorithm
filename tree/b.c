@@ -1,19 +1,28 @@
 ﻿#include "b.h"
+#include "deque.h"
 
 #include <stdio.h>
+#include <string.h>
 
-BNode *new_bnode(size_t m)
+BTree *new_bnode(size_t m)
 {
-    BNode *new_one = NULL;
+    BTree *new_one = NULL;
     size_t i;
-    PBNode *pn = NULL;
+    PBTree *pn = NULL;
     int *pe = NULL;
 
-    new_one = (BNode *)malloc(sizeof(BNode));
-    if (new_one) {
-        new_one->parent = NULL;
-        new_one->m = m;
-        new_one->child = (PBNode *)malloc(sizeof(PBNode) * m);
+    new_one = (BTree *)malloc(sizeof(BTree));
+    if (!new_one)
+        return NULL;
+
+    new_one->parent = NULL;
+    new_one->child = NULL;
+    new_one->element = NULL;
+    new_one->m = m;
+    new_one->childcnt = 0;
+
+    if (m > 2) {
+        new_one->child = (PBTree *)malloc(sizeof(PBTree) * m);
         if (!new_one->child) {
             free(new_one);
         } else {
@@ -36,7 +45,7 @@ BNode *new_bnode(size_t m)
     return new_one;
 }
 
-void delete_bnode(BNode *bn)
+void delete_bnode(BTree *bn)
 {
     if (!bn)
         return;
@@ -50,11 +59,18 @@ void delete_bnode(BNode *bn)
     free(bn);
 }
 
-void print_bnode(BNode *bn)
+void print_bnode(BTree *bn)
 {
-    size_t i;
+    size_t i, j;
     int *pe = NULL;
-    PBNode *pn = NULL;
+    PBTree *pn = NULL;
+    Deque *dq = NULL;
+    BTree *bnode = NULL;
+    size_t dqlen;
+    char *childstr = NULL;
+    char *valuestr = NULL;
+    char *addrstr = NULL;
+    char tmpstr[64];
 
     if (!bn)
         return;
@@ -65,19 +81,96 @@ void print_bnode(BNode *bn)
     if (!pe || !pn)
         return;
 
-    printf("addr: %u (m=%d)\n", (int)bn, (int)bn->m);
-    for (i = 0; i < bn->m - 1; ++i) {
-        printf("%d ", pe[i]);
-    }
-    printf("\n");
+    childstr = (char *)(malloc(MAX_STR_SIZE));
+    valuestr = (char *)(malloc(MAX_STR_SIZE));
+    addrstr  = (char *)(malloc(MAX_STR_SIZE));
 
-    for (i = 0; i < bn->m; ++i) {
-        printf("%u ", (int)pn[i]);
-    }
-    printf("\n\n\n");
+    dq = new_deque();
+    push_back(dq, bn, BTree*);
+    while (!is_empty(dq)) {
+        memset(addrstr, 0, MAX_STR_SIZE);
+        memset(valuestr, 0, MAX_STR_SIZE);
+        memset(childstr, 0, MAX_STR_SIZE);
+        
+        dqlen = size(dq);
+        for (i = 0; i < dqlen; ++i) {
+            bnode = back(dq, BTree *);
+            pe = bnode->element;
+            pn = bnode->child;
 
-    for (i = 0; i < bn->m; ++i) {
-        if (pn)
-            print_bnode(pn[i]);
+            sprintf(tmpstr, "self:0x%8x, parent:0x%8x  ", bnode, bnode->parent);
+            strcat(addrstr, tmpstr);
+            for (j = 0; j < bnode->m - 2; ++j) {
+                strcat(addrstr, "          ");
+            }
+
+            strcat(valuestr, "     ");
+            for (j = 0; j < bnode->m - 1; ++j) {
+                sprintf(tmpstr, "%10d", pe[j]);
+                strcat(valuestr, tmpstr);
+                strcat(valuestr, " ");
+
+                sprintf(tmpstr, "0x%8x", pn[j]);
+                strcat(childstr, tmpstr);
+                strcat(childstr, " ");
+                push_back(dq, pn[j], BTree*);
+            }
+            sprintf(tmpstr, "0x%8x", pn[bnode->m - 1]);
+            strcat(childstr, tmpstr);
+            strcat(childstr, " ");
+            strcat(valuestr, "     ");
+
+            strcat(addrstr,  "| ");
+            strcat(valuestr, "| ");
+            strcat(childstr, "| ");
+
+            push_back(dq, pn[bnode->m - 1], BTree*);
+            pop_front(dq);
+        }
+        printf("%s\n", addrstr);
+        printf("%s\n", valuestr);
+        printf("%s\n", childstr);
+        printf("\n\n");
+    }
+
+    free(addrstr);
+    free(valuestr);
+    free(childstr);
+    delete_deque(dq);
+}
+
+BTree *b_insert(int value, BTree *t)
+{
+    size_t left, right, mid;
+    int *pe = NULL;
+    PBTree *pn = NULL;
+    BTree *ct;
+    size_t ict;
+    if (!t)
+        return NULL;
+
+    pe = t->element;
+    pn = t->child;
+    if (t->childcnt > 0) {
+        left = 0;
+        right = t->childcnt - 1;
+        while (left < right) {
+            mid = (left + right) > 1;
+            if (value < pe[mid]) {
+                right = mid - 1;
+            } else if (value > pe[mid]) {
+                left = mid + 1;
+            } else {
+                return t;
+            }
+        }
+
+        // mid
+        ict = mid;
+        if (value > pe[mid]) {
+            ++ict;
+        }
+
+        // TODO:
     }
 }
