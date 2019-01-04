@@ -23,19 +23,20 @@ BTree *new_bnode(size_t m)
 
     if (m > 2) {
         new_one->child = (PBTree *)malloc(sizeof(PBTree) * m);
-        if (!new_one->child) {
+        new_one->element = (int *)malloc(sizeof(int) * m);
+
+        if (!new_one->child || !new_one->element) {
             free(new_one);
+            new_one = NULL;
+            if (new_one->child)
+                free(new_one->child);
+            if (new_one->element)
+                free(new_one->element);
         } else {
             pn = new_one->child;
             for (i = 0; i < m; ++i)
                 pn[i] = NULL;
-        }
 
-        new_one->element = (int *)malloc(sizeof(int) * (m - 1));
-        if (!new_one->child) {
-            free(new_one->child);
-            free(new_one);
-        } else {
             pe = new_one->element;
             for (i = 0; i < m - 1; ++i)
                 pe[i] = -1;
@@ -139,38 +140,63 @@ void print_bnode(BTree *bn)
     delete_deque(dq);
 }
 
-BTree *b_insert(int value, BTree *t)
+void _b_insert(int value, BTree *t, BTree **root)
 {
     size_t left, right, mid;
     int *pe = NULL;
     PBTree *pn = NULL;
     BTree *ct;
     size_t ict;
+    int i;
     if (!t)
         return NULL;
 
     pe = t->element;
     pn = t->child;
+
     if (t->childcnt > 0) {
-        left = 0;
-        right = t->childcnt - 1;
-        while (left < right) {
-            mid = (left + right) > 1;
-            if (value < pe[mid]) {
-                right = mid - 1;
-            } else if (value > pe[mid]) {
-                left = mid + 1;
-            } else {
-                return t;
+        for (i = 0; i < t->childcnt; ++i) {
+            if (value = pe[i]) {
+                return;
+            } else if (value < pe[i]) {
+                ict = i;
+                break;
             }
         }
+        ict = i;
 
-        // mid
-        ict = mid;
-        if (value > pe[mid]) {
-            ++ict;
-        }
+        _b_insert(value, pn[ict], root);
+    } else {
 
-        // TODO:
     }
+
+    // TODO: 二分法
+    //if (t->childcnt > 0) {
+    //    left = 0;
+    //    right = t->childcnt - 1;
+    //    while (left <= right) {
+    //        mid = (left + right) >> 1;
+    //        if (value < pe[mid]) {
+    //            right = mid - 1;
+    //        } else if (value > pe[mid]) {
+    //            left = mid + 1;
+    //        } else {
+    //            return t;
+    //        }
+    //    }
+
+    //    // mid
+    //    ict = mid;
+    //    if (value > pe[mid]) {
+    //        ++ict;
+    //    }
+
+    //    // TODO:
+    //}
+}
+
+BTree *b_insert(int value, BTree *t)
+{
+    _b_insert(value, t, &t);
+    return t;
 }
