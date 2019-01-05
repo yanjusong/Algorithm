@@ -79,6 +79,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="avl.c" />
+    <ClCompile Include="b.c" />
     <ClCompile Include="bst.c" />
     <ClCompile Include="rb.c" />
     <ClCompile Include="deque.c" />
@@ -87,6 +88,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="avl.h" />
+    <ClInclude Include="b.h" />
     <ClInclude Include="bst.h" />
     <ClInclude Include="rb.h" />
     <ClInclude Include="deque.h" />

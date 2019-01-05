@@ -19,10 +19,10 @@ BTree *new_bnode(size_t m)
     new_one->child = NULL;
     new_one->element = NULL;
     new_one->m = m;
-    new_one->childcnt = 0;
+    new_one->keycnt = 0;
 
     if (m > 2) {
-        new_one->child = (PBTree *)malloc(sizeof(PBTree) * m);
+        new_one->child = (PBTree *)malloc(sizeof(PBTree) * (m + 1));
         new_one->element = (int *)malloc(sizeof(int) * m);
 
         if (!new_one->child || !new_one->element) {
@@ -34,11 +34,11 @@ BTree *new_bnode(size_t m)
                 free(new_one->element);
         } else {
             pn = new_one->child;
-            for (i = 0; i < m; ++i)
+            for (i = 0; i < m + 1; ++i)
                 pn[i] = NULL;
 
             pe = new_one->element;
-            for (i = 0; i < m - 1; ++i)
+            for (i = 0; i < m; ++i)
                 pe[i] = -1;
         }
     }
@@ -60,7 +60,7 @@ void delete_bnode(BTree *bn)
     free(bn);
 }
 
-void print_bnode(BTree *bn)
+void print_bnode(BTree *t)
 {
     size_t i, j;
     int *pe = NULL;
@@ -73,11 +73,11 @@ void print_bnode(BTree *bn)
     char *addrstr = NULL;
     char tmpstr[64];
 
-    if (!bn)
+    if (!t)
         return;
 
-    pe = bn->element;
-    pn = bn->child;
+    pe = t->element;
+    pn = t->child;
 
     if (!pe || !pn)
         return;
@@ -87,7 +87,7 @@ void print_bnode(BTree *bn)
     addrstr  = (char *)(malloc(MAX_STR_SIZE));
 
     dq = new_deque();
-    push_back(dq, bn, BTree*);
+    push_back(dq, t, BTree*);
     while (!is_empty(dq)) {
         memset(addrstr, 0, MAX_STR_SIZE);
         memset(valuestr, 0, MAX_STR_SIZE);
@@ -95,37 +95,40 @@ void print_bnode(BTree *bn)
         
         dqlen = size(dq);
         for (i = 0; i < dqlen; ++i) {
-            bnode = back(dq, BTree *);
+            bnode = front(dq, BTree *);
             pe = bnode->element;
             pn = bnode->child;
 
-            sprintf(tmpstr, "self:0x%8x, parent:0x%8x  ", bnode, bnode->parent);
+            sprintf(tmpstr, "self:0x%.8x, parent:0x%.8x  ", bnode, bnode->parent);
             strcat(addrstr, tmpstr);
             for (j = 0; j < bnode->m - 2; ++j) {
-                strcat(addrstr, "          ");
+                strcat(addrstr, "        ");
             }
 
             strcat(valuestr, "     ");
-            for (j = 0; j < bnode->m - 1; ++j) {
+            for (j = 0; j < bnode->m; ++j) {
                 sprintf(tmpstr, "%10d", pe[j]);
                 strcat(valuestr, tmpstr);
                 strcat(valuestr, " ");
 
-                sprintf(tmpstr, "0x%8x", pn[j]);
+                sprintf(tmpstr, "0x%.8x", pn[j]);
                 strcat(childstr, tmpstr);
                 strcat(childstr, " ");
-                push_back(dq, pn[j], BTree*);
+                if (pn[j])
+                    push_back(dq, pn[j], BTree*);
             }
-            sprintf(tmpstr, "0x%8x", pn[bnode->m - 1]);
+            sprintf(tmpstr, "0x%.8x", pn[bnode->m]);
             strcat(childstr, tmpstr);
             strcat(childstr, " ");
-            strcat(valuestr, "     ");
+            if (pn[bnode->m])
+                push_back(dq, pn[bnode->m], BTree*);
+
+            strcat(valuestr, "      ");
 
             strcat(addrstr,  "| ");
             strcat(valuestr, "| ");
             strcat(childstr, "| ");
 
-            push_back(dq, pn[bnode->m - 1], BTree*);
             pop_front(dq);
         }
         printf("%s\n", addrstr);
@@ -140,13 +143,85 @@ void print_bnode(BTree *bn)
     delete_deque(dq);
 }
 
-void _b_insert(int value, BTree *t, BTree **root)
+void insert(int value, BTree *t, BTree *left, BTree *right, BTree **root)
 {
-    size_t left, right, mid;
     int *pe = NULL;
     PBTree *pn = NULL;
-    BTree *ct;
-    size_t ict;
+    BTree *right_node = NULL;
+    int pos;
+    int i, j, ori_keycnt;;
+
+    if (!t)
+        return NULL;
+
+    pe = t->element;
+    pn = t->child;
+    ori_keycnt = t->keycnt;
+
+    for (i = 0; i < ori_keycnt; ++i) {
+        if (value == pe[i]) {
+            return;
+        } else if (value < pe[i]) {
+            break;
+        }
+    }
+    pos = i;
+
+    for (i = ori_keycnt - 1; i >= pos; --i) {
+        pe[i + 1] = pe[i];
+    }
+    for (i = ori_keycnt; i >= pos + 1; --i) {
+        pn[i + 1] = pn[i];
+    }
+
+    pn[pos] = left;
+    pn[pos + 1] = right;
+    pe[pos] = value;
+    ++t->keycnt;
+
+    ori_keycnt = t->keycnt;
+    // 分裂，t结点分裂成t和右结点
+    if (ori_keycnt == t->m) {
+        right_node = new_bnode(t->m);
+        right_node->parent = t->parent;
+        
+        pos = t->m / 2;
+        for (i = pos + 1, j = 0; i < ori_keycnt; ++i, ++j) {
+            (right_node->element)[j] = pe[i];
+            pe[i] = -1;
+            ++right_node->keycnt;
+            --t->keycnt;
+        }
+        for (i = pos + 1, j = 0; i < ori_keycnt + 1; ++i, ++j) {
+            (right_node->child)[j] = pn[i];
+            // 分裂后的右结点原来的父亲是t，现在改成right_node
+            if ((right_node->child)[j]) {
+                (right_node->child)[j]->parent = right_node;
+            }
+            pn[i] = NULL;
+        }
+
+        value = pe[pos];
+        pe[pos] = -1;
+        --t->keycnt;
+
+        if (t->parent == NULL) {
+            BTree *p = new_bnode(t->m);
+            t->parent = p;
+            right_node->parent = t->parent;
+            *root = t->parent;
+        }
+
+        // 分裂后插入父结点
+        insert(value, t->parent, t, right_node, root);
+    }
+}
+
+void find_insert_node(int value, BTree *t, BTree **root)
+{
+    int *pe = NULL;
+    PBTree *pn = NULL;
+    size_t pos;
     int i;
     if (!t)
         return NULL;
@@ -154,49 +229,78 @@ void _b_insert(int value, BTree *t, BTree **root)
     pe = t->element;
     pn = t->child;
 
-    if (t->childcnt > 0) {
-        for (i = 0; i < t->childcnt; ++i) {
-            if (value = pe[i]) {
-                return;
-            } else if (value < pe[i]) {
-                ict = i;
-                break;
-            }
+    for (i = 0; i < t->keycnt; ++i) {
+        if (value == pe[i]) {
+            return;
+        } else if (value < pe[i]) {
+            break;
         }
-        ict = i;
-
-        _b_insert(value, pn[ict], root);
-    } else {
-
     }
+    pos = i;
 
-    // TODO: 二分法
-    //if (t->childcnt > 0) {
-    //    left = 0;
-    //    right = t->childcnt - 1;
-    //    while (left <= right) {
-    //        mid = (left + right) >> 1;
-    //        if (value < pe[mid]) {
-    //            right = mid - 1;
-    //        } else if (value > pe[mid]) {
-    //            left = mid + 1;
-    //        } else {
-    //            return t;
-    //        }
-    //    }
-
-    //    // mid
-    //    ict = mid;
-    //    if (value > pe[mid]) {
-    //        ++ict;
-    //    }
-
-    //    // TODO:
-    //}
+    if (pn[pos])
+        find_insert_node(value, pn[pos], root);
+    else
+        insert(value, t, NULL, NULL, root);
 }
 
 BTree *b_insert(int value, BTree *t)
 {
-    _b_insert(value, t, &t);
+    find_insert_node(value, t, &t);
     return t;
+}
+
+bool check_bnode(BTree *t, int m)
+{
+    bool ret = true;
+    PBTree *ppn = NULL;
+    int *pe = NULL;
+    BTree *p;
+    int i;
+
+    if (!t)
+        return false;
+
+    if (t->keycnt >= m || t->keycnt <= 0)
+        return false;
+
+    pe = t->element;
+    // 检查是否排序
+    for (i = 0; i < t->keycnt - 1; ++i)
+        if (pe[i] >= pe[i + 1])
+            return false;
+    
+
+    // 检查父节点是否的孩子结点是否符合逻辑
+    p = t->parent;
+    if (p) {
+        ppn = p->child;
+        for (i = 0; i < p->keycnt + 1 && ret; ++i) {
+            ret &= (ppn[i] != NULL);
+        }
+
+        for (i = p->keycnt + 1; i < p->m + 1 && ret; ++i) {
+            ret &= (ppn[i] == NULL);
+        }
+    }
+
+    return ret;
+}
+
+bool check_btree(BTree *t, int m)
+{
+    bool ret = true;
+    PBTree *pn = NULL;
+    int i;
+
+    if (!t)
+        return true;
+
+    ret &= check_bnode(t, m);
+    pn = t->child;
+    for (i = 0; i < m + 1 && ret; ++i) {
+        ret &= check_btree(pn[i], m);
+    }
+
+    return ret;
 }
