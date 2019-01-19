@@ -172,8 +172,6 @@ void PUSH_BACK(Deque *dq, void *data, size_t len)
     if (!i)
         return;
 
-    int x = *((int *)data);
-    int xxx = *((int *)i->data);
     pre_rear = dq->rear->prev;
     pre_rear->next = i;
     i->prev = pre_rear;
