@@ -1,4 +1,4 @@
-#include <stdio.h>
+﻿#include <stdio.h>
 
 int kmpMatch(const char *str, const char *p);
 

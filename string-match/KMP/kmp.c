@@ -1,4 +1,4 @@
-#include <stdio.h>
+﻿#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -49,7 +49,7 @@ int kmpMatch(const char *str, const char *p)
         } else if (j == 0) {
             ++i;
         } else {
-            // `p[0]...p[next[j - 1]]`��`str[i - 1 - (next[j-1] + 1)]...str[i-1]`�غ�
+            // `p[0]...p[next[j - 1]]`ºÍ`str[i - 1 - (next[j-1] + 1)]...str[i-1]`ÖØºÏ
             j = next[j - 1] + 1;
         }
     }
