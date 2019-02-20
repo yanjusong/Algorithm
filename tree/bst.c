@@ -2,7 +2,7 @@
 
 #include <stdlib.h>
 
-BTree *find_min(BTree *t)
+BSTree *find_min(BSTree *t)
 {
     if (t == NULL) {
         return NULL;
@@ -13,7 +13,7 @@ BTree *find_min(BTree *t)
     }
 }
 
-BTree *find_max(BTree *t)
+BSTree *find_max(BSTree *t)
 {
     if (t == NULL) {
         return NULL;
@@ -24,7 +24,7 @@ BTree *find_max(BTree *t)
     }
 }
 
-BTree *find(int value, BTree *t)
+BSTree *find(int value, BSTree *t)
 {
     if (t == NULL) {
         return NULL;
@@ -39,7 +39,7 @@ BTree *find(int value, BTree *t)
     }
 }
 
-BTree *bst_insert(int value, BTree *t)
+BSTree *bst_insert(int value, BSTree *t)
 {
     if (!t)
         return getNode(value);
@@ -55,11 +55,11 @@ BTree *bst_insert(int value, BTree *t)
     return t;
 }
 
-BTree *bst_delete(int value, BTree *t)
+BSTree *bst_delete(int value, BSTree *t)
 {
     //Deletes node from the tree
     // Return a pointer to the resulting tree
-    BTree *tmp_cell;
+    BSTree *tmp_cell;
 
     if (t == NULL) return NULL;
 

@@ -30,7 +30,10 @@
     <ClCompile Include="deque.c">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="test_traveltree.c">
+    <ClCompile Include="test_btree.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="b.c">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -48,6 +51,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="deque.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="b.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

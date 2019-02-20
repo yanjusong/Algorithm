@@ -15,15 +15,15 @@ int *g_insert_nums;
 int *g_delete_nums;
 int *g_search_nums;
 
-typedef BTree *(*TestFunc)(int, BTree *);
+typedef BSTree *(*TestFunc)(int, BSTree *);
 
 void test_insert_and_delete_and_search(TestFunc inserted_func, TestFunc deleted_func, const char *desc)
 {
     long begintime, endtime;
     int insert_cost, delete_cost, search_cost;
     int i;
-    BTree *pfound;
-    BTree *root = NULL;
+    BSTree *pfound;
+    BSTree *root = NULL;
 
     // 插入
     begintime = clock();
