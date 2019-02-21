@@ -49,7 +49,7 @@ int kmpMatch(const char *str, const char *p)
         } else if (j == 0) {
             ++i;
         } else {
-            // `p[0]...p[next[j - 1]]`ºÍ`str[i - 1 - (next[j-1] + 1)]...str[i-1]`ÖØºÏ
+            // `p[0]...p[next[j - 1]]`和`str[i - 1 - (next[j-1] + 1)]...str[i-1]`重合
             j = next[j - 1] + 1;
         }
     }
