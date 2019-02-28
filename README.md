@@ -36,3 +36,4 @@
 ## [字符串匹配](./string-match)
 
 1. [KMP](./string-match/KMP/kmp.c)
+2. [Trie](./string-match/Trie/trie.h)
