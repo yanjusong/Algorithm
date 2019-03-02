@@ -1,4 +1,4 @@
-﻿#ifndef EASY_SORT_H_20181210
+#ifndef EASY_SORT_H_20181210
 #define EASY_SORT_H_20181210
 
 #ifdef __cplusplus
@@ -12,6 +12,7 @@ int mergesort(int *nums, size_t n);
 int heapsort(int *nums, size_t n);
 int selectsort(int *nums, size_t n);
 int shellsort(int *nums, size_t n);
+int radixsort(int *nums, size_t n)
 
 #ifdef __cplusplus
 }
