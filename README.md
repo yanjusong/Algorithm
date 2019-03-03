@@ -38,4 +38,4 @@
 1. [线段树-区间求和](./unclassified/segment-tree/segment_tree.cpp)
 2. [两个树节点的最近公共父结点](./unclassified/lowest-common-ancestor/LCA.cpp)
 3. [查找无序序列的中位数-最小堆方法](./unclassified/middle-number/middle_number.cpp)
-
+4. [查找无序序列第k大的数-快排partiton方法](./unclassified/kth-number/kth.cpp)
