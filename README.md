@@ -37,3 +37,7 @@
 
 1. [KMP](./string-match/KMP/kmp.c)
 2. [Trie](./string-match/Trie/trie.h)
+
+## [经典面试题](./unclassified)
+
+1. [线段树-区间求和](./unclassified/segment_tree.cpp)
