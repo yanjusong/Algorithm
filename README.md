@@ -43,3 +43,4 @@
 6. [nginx加权平滑轮训](./unclassified/weighted-round-robin/weighted_round_robin.cpp)
 7. [区间合并](./unclassified/merge-intervals/merge_intervals.cpp)
 8. [O(1)空间复杂度逆向打印链表 ](./unclassified/print-reverse-linked-list/print_reverse_linked_list.cpp)
+9. [简单全排列-不重复数组 ](./unclassified/all-permutation/all_permutation.cpp)
