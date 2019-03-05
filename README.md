@@ -41,3 +41,4 @@
 4. [查找无序序列第k大的数-快排partiton方法](./unclassified/kth-number/kth.cpp)
 5. [单向链表反转-递归&非递归](./unclassified/reverse-one-way-linked-list/reverse_oneway_linked_list.cpp)
 6. [nginx加权平滑轮训](./unclassified/weighted-round-robin/weighted_round_robin.cpp)
+7. [区间合并](./unclassified/merge-intervals/merge_intervals.cpp)
