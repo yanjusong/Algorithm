@@ -46,3 +46,4 @@
 9. [简单全排列-无去重](./unclassified/all-permutation/all_permutation.cpp)
 10. [全排列-去重 ](./unclassified/all-permutation-no-repeat/all_permutation_no_repeat.cpp)
 11. [01背包 ](./unclassified/knapsack-problem/knapsack01.cpp)
+12. [寻找在线日志的峰值区间 ](./unclassified/find-peak/find_peak.cpp)
