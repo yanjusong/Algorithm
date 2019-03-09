@@ -47,3 +47,5 @@
 10. [全排列-去重 ](./unclassified/all-permutation-no-repeat/all_permutation_no_repeat.cpp)
 11. [01背包 ](./unclassified/knapsack-problem/knapsack01.cpp)
 12. [寻找在线日志的峰值区间 ](./unclassified/find-peak/find_peak.cpp)
+13. [寻找无序数组中比左边的数都大比右边的数都小的数 ](./unclassified/find-the-pivot/find_the_pivot.cpp)
+
