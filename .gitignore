@@ -8,6 +8,7 @@ build*/
 */Release/
 */*.out
 */*/a
+*/a
 */*.exe
 */*/*.out
 .DS_Store

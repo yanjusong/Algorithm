@@ -27,6 +27,8 @@
 2. [平衡二叉搜索树](./tree/avl.h)
 3. [红黑树](./tree/rb.h)
 
+## [图](./graph)
+1. [Dijkstra](./graph/dijkstra.cpp)
 
 ## [字符串匹配](./string-match)
 
