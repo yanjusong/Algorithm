@@ -81,6 +81,21 @@ public:
         return result;
     }
 
+    void createOrChangeNeighbor(GNode *root, int dis)
+    {
+        std::set<NodeDisPair>::iterator it = neighbors_.find(NodeDisPair(root));
+        if (it != neighbors_.end())
+        {
+            neighbors_.erase(it);
+        }
+        neighbors_.insert(NodeDisPair(root, dis));
+    }
+
+    bool hasNeighbor(GNode *root)
+    {
+        return neighbors_.find(NodeDisPair(root)) != neighbors_.end();
+    }
+
     void dijkstra(std::vector<NodeDisPair> &result);
 
     void bfs(UserFunc func, void *udata);
@@ -88,6 +103,8 @@ public:
     void dfs(UserFunc func, void *udata);
 
     GNode *prim();
+
+    GNode *kruskal();
 
 private:
     static void destroy(GNode *root, std::set<GNode *> &visitedSet)
