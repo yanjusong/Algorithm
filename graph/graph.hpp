@@ -8,6 +8,8 @@
 class GNode;
 typedef std::pair<GNode *, int> NodeDisPair;
 
+typedef void(*UserFunc)(GNode *root, void *udata);
+
 class GNode
 {
 public:
@@ -58,6 +60,8 @@ public:
     }
 
     void dijkstra(std::vector<NodeDisPair> &result);
+
+    void bfs(UserFunc func, void *udata);
 
 private:
     void destroy(GNode *root, std::set<GNode *> &visitedSet)
