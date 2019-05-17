@@ -16,7 +16,7 @@ void GNode::dijkstra(std::vector<NodeDisPair> &result)
     std::map<GNode *, int>::iterator minIt;
     int minDis = 0x7fffffff;
     std::map<GNode *, int>::iterator it;
-    std::vector<NodeDisPair>::iterator vecIt;
+    std::set<NodeDisPair>::iterator vecIt;
 
     while (true)
     {

@@ -14,7 +14,7 @@ class GNode
 {
 public:
     int val_;
-    std::vector<NodeDisPair> neighbors_;
+    std::set<NodeDisPair> neighbors_;
 
     GNode() {}
     GNode(int val) : val_(val) {}
@@ -23,13 +23,16 @@ public:
     {
         for (const auto &x : neighbors)
         {
-            neighbors_.push_back(NodeDisPair(x, 0));
+            neighbors_.insert(NodeDisPair(x, 0));
         }
     }
 
     void initNeighbors(std::vector<NodeDisPair> neighbors)
     {
-        neighbors_ = neighbors;
+        for (const auto &x : neighbors)
+        {
+            neighbors_.insert(NodeDisPair(x.first, x.second));
+        }
     }
 
     void print()
@@ -64,6 +67,8 @@ public:
     void bfs(UserFunc func, void *udata);
 
     void dfs(UserFunc func, void *udata);
+
+    GNode *prim();
 
 private:
     void destroy(GNode *root, std::set<GNode *> &visitedSet)
