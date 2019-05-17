@@ -6,7 +6,6 @@
 #include <set>
 
 class GNode;
-// typedef std::pair<GNode *, int> NodeDisPair;
 
 struct NodeDisPair
 {
@@ -74,6 +73,14 @@ public:
         return true;
     }
 
+    std::set<GNode *> getAllNodes()
+    {
+        std::set<GNode *> result;
+        getAllNodes(this, result);
+
+        return result;
+    }
+
     void dijkstra(std::vector<NodeDisPair> &result);
 
     void bfs(UserFunc func, void *udata);
@@ -124,6 +131,25 @@ private:
             }
 
             printGraph(x.node_, visitedSet);
+        }
+    }
+
+    void getAllNodes(GNode *root, std::set<GNode *> &visitedSet)
+    {
+        if (!root)
+        {
+            return;
+        }
+        visitedSet.insert(root);
+
+        for (auto &x : root->neighbors_)
+        {
+            if (visitedSet.find(x.node_) != visitedSet.end())
+            {
+                continue;
+            }
+
+            getAllNodes(x.node_, visitedSet);
         }
     }
 };
