@@ -31,8 +31,9 @@
 1. [BFS](./graph/bfs.cpp)
 2. [DFS](./graph/dfs.cpp)
 3. [Dijkstra](./graph/dijkstra.cpp)
-4. [Prim](./graph/prim.cpp)
-5. [Kruskal](./graph/kruskal.cpp)
+4. [Floyd](./graph/floyd.cpp)
+5. [Prim](./graph/prim.cpp)
+6. [Kruskal](./graph/kruskal.cpp)
 
 ## [字符串匹配](./string-match)
 1. [KMP](./string-match/KMP/kmp.c)
