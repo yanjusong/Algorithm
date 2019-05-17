@@ -57,7 +57,7 @@ public:
         return true;
     }
 
-    bool dijkstra(std::vector<NodeDisPair> &result);
+    void dijkstra(std::vector<NodeDisPair> &result);
 
 private:
     void destroy(GNode *root, std::set<GNode *> &visitedSet)

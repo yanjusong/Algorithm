@@ -3,13 +3,8 @@
 #include <map>
 #include <algorithm>
 
-bool GNode::dijkstra(std::vector<NodeDisPair> &result)
+void GNode::dijkstra(std::vector<NodeDisPair> &result)
 {
-    if (!checkDis())
-    {
-        return false;
-    }
-
     // dis的每个元素表示this到这个结点的当前最短距离，
     // 如果可以在visitedSet找到这个结点指针说明是最终结果。
     std::map<GNode *, int> dis;
@@ -70,6 +65,4 @@ bool GNode::dijkstra(std::vector<NodeDisPair> &result)
     {
         result.push_back({x.first, x.second});
     }
-
-    return true;
 }
