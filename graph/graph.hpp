@@ -98,6 +98,8 @@ public:
 
     void dijkstra(std::vector<NodeDisPair> &result);
 
+    void floyd(std::vector<NodeDisPair> &result);
+
     void bfs(UserFunc func, void *udata);
 
     void dfs(UserFunc func, void *udata);
