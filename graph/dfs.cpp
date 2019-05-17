@@ -22,9 +22,9 @@ void dfsInternal(GNode *root, UserFunc func, void *udata, std::set<GNode *> &vis
 
     for (auto &x : root->neighbors_)
     {
-        if (visitedSet.find(x.first) == visitedSet.end())
+        if (visitedSet.find(x.node_) == visitedSet.end())
         {
-            dfsInternal(x.first, func, udata, visitedSet);
+            dfsInternal(x.node_, func, udata, visitedSet);
         }
     }
 }

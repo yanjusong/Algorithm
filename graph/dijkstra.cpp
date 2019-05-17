@@ -43,18 +43,18 @@ void GNode::dijkstra(std::vector<NodeDisPair> &result)
              vecIt != minIt->first->neighbors_.end();
              ++vecIt)
         {
-            if (dis.find(vecIt->first) == dis.end())
+            if (dis.find(vecIt->node_) == dis.end())
             {
-                dis[vecIt->first] = dis[minIt->first] + vecIt->second;
+                dis[vecIt->node_] = dis[minIt->first] + vecIt->dis_;
             }
             else
             {
                 // 在visitedSet中存在，说明已经被计算过了，无序重复计算，主要适用于无向图。
-                if (visitedSet.find(vecIt->first) != visitedSet.end())
+                if (visitedSet.find(vecIt->node_) != visitedSet.end())
                 {
                     continue;
                 }
-                dis[vecIt->first] = std::min(dis[vecIt->first], dis[minIt->first] + vecIt->second);
+                dis[vecIt->node_] = std::min(dis[vecIt->node_], dis[minIt->first] + vecIt->dis_);
             }
         }
 

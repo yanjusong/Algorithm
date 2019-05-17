@@ -26,10 +26,10 @@ void GNode::bfs(UserFunc func, void *udata)
 
         for (auto &x : lastNode->neighbors_)
         {
-            if (visitedSet.find(x.first) == visitedSet.end())
+            if (visitedSet.find(x.node_) == visitedSet.end())
             {
-                curQueue.push(x.first);
-                visitedSet.insert(x.first);
+                curQueue.push(x.node_);
+                visitedSet.insert(x.node_);
             }
         }
 

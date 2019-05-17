@@ -6,7 +6,19 @@
 #include <set>
 
 class GNode;
-typedef std::pair<GNode *, int> NodeDisPair;
+// typedef std::pair<GNode *, int> NodeDisPair;
+
+struct NodeDisPair
+{
+    GNode *node_;
+    int dis_;
+    NodeDisPair(GNode *node, int dis = 0) : node_(node), dis_(dis) {}
+
+    bool operator<(const NodeDisPair &rhs) const
+    {
+        return node_ < rhs.node_;
+    }
+};
 
 typedef void(*UserFunc)(GNode *root, void *udata);
 
@@ -27,7 +39,7 @@ public:
         }
     }
 
-    void initNeighbors(std::vector<NodeDisPair> neighbors)
+    void initNeighbors(std::vector<std::pair<GNode *, int>> neighbors)
     {
         for (const auto &x : neighbors)
         {
@@ -81,12 +93,12 @@ private:
 
         for (auto &x : root->neighbors_)
         {
-            if (visitedSet.find(x.first) != visitedSet.end())
+            if (visitedSet.find(x.node_) != visitedSet.end())
             {
                 continue;
             }
 
-            destroy(x.first, visitedSet);
+            destroy(x.node_, visitedSet);
         }
     }
 
@@ -101,17 +113,17 @@ private:
         printf("[val:%d] [%p]\n", root->val_, root);
         for (auto &x : root->neighbors_)
         {
-            printf("\t |-  [val:%d] [dis:%d] [%p]\n", x.first->val_, x.second, x.first);
+            printf("\t |-  [val:%d] [dis:%d] [%p]\n", x.node_->val_, x.dis_, x.node_);
         }
 
         for (auto &x : root->neighbors_)
         {
-            if (visitedSet.find(x.first) != visitedSet.end())
+            if (visitedSet.find(x.node_) != visitedSet.end())
             {
                 continue;
             }
 
-            printGraph(x.first, visitedSet);
+            printGraph(x.node_, visitedSet);
         }
     }
 };
