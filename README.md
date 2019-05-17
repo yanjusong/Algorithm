@@ -29,6 +29,8 @@
 
 ## [图](./graph)
 1. [Dijkstra](./graph/dijkstra.cpp)
+2. [BFS](./graph/bfs.cpp)
+3. [DFS](./graph/dfs.cpp)
 
 ## [字符串匹配](./string-match)
 

@@ -63,6 +63,8 @@ public:
 
     void bfs(UserFunc func, void *udata);
 
+    void dfs(UserFunc func, void *udata);
+
 private:
     void destroy(GNode *root, std::set<GNode *> &visitedSet)
     {
