@@ -53,10 +53,10 @@ public:
         printGraph(this, visitedSet);
     }
 
-    void destroy()
+    static void destroy(GNode *root)
     {
         std::set<GNode *> visitedSet;
-        destroy(this, visitedSet);
+        destroy(root, visitedSet);
         for (auto &x : visitedSet)
         {
             delete x;
@@ -83,7 +83,7 @@ public:
     GNode *prim();
 
 private:
-    void destroy(GNode *root, std::set<GNode *> &visitedSet)
+    static void destroy(GNode *root, std::set<GNode *> &visitedSet)
     {
         if (!root)
         {
