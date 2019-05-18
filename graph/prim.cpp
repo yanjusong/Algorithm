@@ -3,7 +3,7 @@
 #include <map>
 #include <algorithm>
 
-static GNode* getNode(std::map<GNode *, GNode *> &hash, GNode *key)
+static GNode *getNode(std::map<GNode *, GNode *> &hash, GNode *key)
 {
     if (hash.find(key) == hash.end())
     {
@@ -30,7 +30,7 @@ static GNode *makeMinGraph(GNode *root, std::map<GNode *, std::vector<GNode *>> 
         {
             GNode *preNode = getNode(hash, x.second[i - 1]);
             GNode *curNode = getNode(hash, x.second[i]);
-            
+
             std::set<NodeDisPair>::iterator toRightIt = x.second[i - 1]->neighbors_.find(x.second[i]);
             if (toRightIt != x.second[i - 1]->neighbors_.end())
             {
@@ -94,7 +94,7 @@ GNode *GNode::prim()
             if (dis.find(vecIt->node_) == dis.end())
             {
                 dis[vecIt->node_] = dis[minIt->first] + vecIt->dis_;
-                isRepath= true;
+                isRepath = true;
             }
             else
             {
