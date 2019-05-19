@@ -18,6 +18,7 @@
 ## [搜索算法](./搜索算法)
 
 1. [跳表](./search/skip-table/skiptable.hpp)
+2. [布隆过滤器](./search/bloom-filter/bloomfilter.hpp)
 
 ------
 
