@@ -157,7 +157,7 @@ public:
 
                     if ((*right)->stnode_ != rear_ && (*right)->stnode_->key_ == k)
                     {
-                        if (!outNode)
+                        if (i == 0 && outNode)
                         {
                             outNode = (*left)->next_->stnode_;
                         }
