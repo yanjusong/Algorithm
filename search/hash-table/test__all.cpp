@@ -44,7 +44,7 @@ public:
         HashTable<int, std::string> hashTable(getIntHash);
 
         // 分别插入0、128、256
-        // table: [0] -> (0, "testInsert") -> (128, "testInsert") -> (256, "testInsert") -> NULL
+        // table: [0] -> (0, "testCURD") -> (128, "testCURD") -> (256, "testCURD") -> NULL
         //        [1] -> NULL
         //        [2] -> NULL
         //         .
@@ -53,7 +53,7 @@ public:
         //        [127] -> NULL
         for (int i = 0, j = 0; i < 3; ++i, j += 128)
         {
-            hashTable.insert(j, "testInsert");
+            hashTable.insert(j, "testCURD");
         }
 
         assert(hashTable.itemNum_ == 3);
@@ -62,9 +62,9 @@ public:
         assert(hashTable.items_[0]->next_->key_ == 128);
         assert(hashTable.items_[0]->next_->next_->key_ == 256);
         assert(hashTable.items_[0]->next_->next_->next_ == NULL);
-        assert(hashTable.items_[0]->val_ == "testInsert");
-        assert(hashTable.items_[0]->next_->val_ == "testInsert");
-        assert(hashTable.items_[0]->next_->next_->val_ == "testInsert");
+        assert(hashTable.items_[0]->val_ == "testCURD");
+        assert(hashTable.items_[0]->next_->val_ == "testCURD");
+        assert(hashTable.items_[0]->next_->next_->val_ == "testCURD");
 
         for (int i = 0, j = 0; i < 3; ++i, j += 128)
         {
@@ -72,7 +72,7 @@ public:
             std::string val;
             ok = hashTable.get(j, val);
             assert(ok);
-            assert(val == "testInsert");
+            assert(val == "testCURD");
         }
 
         for (int i = 1; i < 128; ++i)
@@ -85,40 +85,40 @@ public:
         }
 
         // 修改
-        // table: [0] -> (0, "testInsert__0") -> (128, "testInsert__128") -> (256, "testInsert__256") -> NULL
+        // table: [0] -> (0, "testCURD__0") -> (128, "testCURD__128") -> (256, "testCURD__256") -> NULL
         //        [1] -> NULL
         //        [2] -> NULL
         //         .
         //         .
         //         .
         //        [127] -> NULL
-        hashTable.insert(0, "testInsert__0");
-        hashTable.insert(128, "testInsert__128");
-        hashTable.insert(256, "testInsert__256");
+        hashTable.insert(0, "testCURD__0");
+        hashTable.insert(128, "testCURD__128");
+        hashTable.insert(256, "testCURD__256");
 
         {
             std::string val;
             bool ok = hashTable.get(0, val);
             assert(SA_ONSTACK);
-            assert(val == "testInsert__0");
+            assert(val == "testCURD__0");
         }
 
         {
             std::string val;
             bool ok = hashTable.get(128, val);
             assert(ok);
-            assert(val == "testInsert__128");
+            assert(val == "testCURD__128");
         }
 
         {
             std::string val;
             bool ok = hashTable.get(256, val);
             assert(ok);
-            assert(val == "testInsert__256");
+            assert(val == "testCURD__256");
         }
 
         // 删除 0
-        // table: [0] -> (128, "testInsert__128") -> (256, "testInsert__256") -> NULL
+        // table: [0] -> (128, "testCURD__128") -> (256, "testCURD__256") -> NULL
         //        [1] -> NULL
         //        [2] -> NULL
         //         .
@@ -131,11 +131,11 @@ public:
         assert(hashTable.items_[0]->key_ == 128);
         assert(hashTable.items_[0]->next_->key_ == 256);
         assert(hashTable.items_[0]->next_->next_ == NULL);
-        assert(hashTable.items_[0]->val_ == "testInsert__128");
-        assert(hashTable.items_[0]->next_->val_ == "testInsert__256");
+        assert(hashTable.items_[0]->val_ == "testCURD__128");
+        assert(hashTable.items_[0]->next_->val_ == "testCURD__256");
 
         // 删除 256
-        // table: [0] -> (128, "testInsert__128") -> NULL
+        // table: [0] -> (128, "testCURD__128") -> NULL
         //        [1] -> NULL
         //        [2] -> NULL
         //         .
@@ -147,7 +147,7 @@ public:
         assert(hashTable.items_[0]);
         assert(hashTable.items_[0]->key_ == 128);
         assert(hashTable.items_[0]->next_ == NULL);
-        assert(hashTable.items_[0]->val_ == "testInsert__128");
+        assert(hashTable.items_[0]->val_ == "testCURD__128");
 
         // 删除 128
         // table: [0] -> NULL
@@ -193,7 +193,7 @@ public:
         HashTable<int, std::string> hashTable(getIntHash);
 
         // 分别插入0、128、256
-        // table: [0] -> (0, "testInsert") -> (128, "testInsert") -> (256, "testInsert") -> NULL
+        // table: [0] -> (0, "testCURD") -> (128, "testCURD") -> (256, "testCURD") -> NULL
         //        [1] -> NULL
         //        [2] -> NULL
         //         .
@@ -202,7 +202,7 @@ public:
         //        [127] -> NULL
         for (int i = 0, j = 0; i < 3; ++i, j += 128)
         {
-            hashTable[j] = "testInsert";
+            hashTable[j] = "testCURD";
         }
 
         assert(hashTable.itemNum_ == 3);
@@ -211,9 +211,9 @@ public:
         assert(hashTable.items_[0]->next_->key_ == 128);
         assert(hashTable.items_[0]->next_->next_->key_ == 256);
         assert(hashTable.items_[0]->next_->next_->next_ == NULL);
-        assert(hashTable.items_[0]->val_ == "testInsert");
-        assert(hashTable.items_[0]->next_->val_ == "testInsert");
-        assert(hashTable.items_[0]->next_->next_->val_ == "testInsert");
+        assert(hashTable.items_[0]->val_ == "testCURD");
+        assert(hashTable.items_[0]->next_->val_ == "testCURD");
+        assert(hashTable.items_[0]->next_->next_->val_ == "testCURD");
 
         assert(hashTable.itemNum_ == 3);
         for (int i = 0, j = 0; i < 3; ++i, j += 128)
@@ -222,17 +222,17 @@ public:
             std::string val;
             ok = hashTable.get(j, val);
             assert(ok);
-            assert(val == "testInsert");
+            assert(val == "testCURD");
         }
 
         // 修改
-        hashTable[0] = "testInsert__0";
+        hashTable[0] = "testCURD__0";
         assert(hashTable.itemNum_ == 3);
 
-        hashTable[128] = "testInsert__128";
+        hashTable[128] = "testCURD__128";
         assert(hashTable.itemNum_ == 3);
 
-        hashTable[256] = "testInsert__256";
+        hashTable[256] = "testCURD__256";
         assert(hashTable.itemNum_ == 3);
 
         assert(hashTable.items_[0]);
@@ -240,29 +240,29 @@ public:
         assert(hashTable.items_[0]->next_->key_ == 128);
         assert(hashTable.items_[0]->next_->next_->key_ == 256);
         assert(hashTable.items_[0]->next_->next_->next_ == NULL);
-        assert(hashTable.items_[0]->val_ == "testInsert__0");
-        assert(hashTable.items_[0]->next_->val_ == "testInsert__128");
-        assert(hashTable.items_[0]->next_->next_->val_ == "testInsert__256");
+        assert(hashTable.items_[0]->val_ == "testCURD__0");
+        assert(hashTable.items_[0]->next_->val_ == "testCURD__128");
+        assert(hashTable.items_[0]->next_->next_->val_ == "testCURD__256");
 
         {
             std::string val;
             bool ok = hashTable.get(0, val);
             assert(SA_ONSTACK);
-            assert(val == "testInsert__0");
+            assert(val == "testCURD__0");
         }
 
         {
             std::string val;
             bool ok = hashTable.get(128, val);
             assert(ok);
-            assert(val == "testInsert__128");
+            assert(val == "testCURD__128");
         }
 
         {
             std::string val;
             bool ok = hashTable.get(256, val);
             assert(ok);
-            assert(val == "testInsert__256");
+            assert(val == "testCURD__256");
         }
     }
 
