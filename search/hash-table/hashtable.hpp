@@ -30,17 +30,7 @@ public:
 
     ~HashTable()
     {
-        int len = items_.size();
-        for (int i = 0; i < len; ++i)
-        {
-            HNode *keyNode = items_[i];
-            while (keyNode)
-            {
-                HNode *deletedNode = keyNode;
-                keyNode = keyNode->next_;
-                delete deletedNode;
-            }
-        }
+        destroy(items_);
     }
 
     void insert(const K &key, const T &val)
@@ -133,6 +123,7 @@ private:
             }
         }
 
+        destroy(items_);
         items_ = items;
     }
 
@@ -167,6 +158,21 @@ private:
         }
 
         return true;
+    }
+
+    void destroy(std::vector<HNode *> &items)
+    {
+        int len = items.size();
+        for (int i = 0; i < len; ++i)
+        {
+            HNode *keyNode = items[i];
+            while (keyNode)
+            {
+                HNode *deletedNode = keyNode;
+                keyNode = keyNode->next_;
+                delete deletedNode;
+            }
+        }
     }
 
 private:
